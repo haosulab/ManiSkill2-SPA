@@ -30,9 +30,7 @@ import tensorflow as tf
 
 flags.DEFINE_string('root_dir', '.', '')
 flags.DEFINE_string('data_dir', '.', '')
-flags.DEFINE_string('assets_root', './assets/', '')
 flags.DEFINE_bool('disp', False, '')
-flags.DEFINE_bool('shared_memory', False, '')
 flags.DEFINE_string('task', 'hanoi', '')
 flags.DEFINE_string('agent', 'transporter', '')
 flags.DEFINE_integer('n_demos', 100, '')
@@ -59,12 +57,7 @@ def main(unused_argv):
     dev_cfg = [cfg.VirtualDeviceConfiguration(memory_limit=mem_limit)]
     cfg.set_virtual_device_configuration(gpus[0], dev_cfg)
 
-  # Initialize environment and task.
-#   env = Environment(
-#       FLAGS.assets_root,
-#       disp=FLAGS.disp,
-#       shared_memory=FLAGS.shared_memory,
-#       hz=480)
+
   import gym
   import mani_skill2.envs
   env = gym.make("AssemblingKits-v1", obs_mode="rgbd")

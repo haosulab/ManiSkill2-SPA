@@ -54,7 +54,7 @@ python create_dataset.py --env-name AssemblingKits-v0 --num-procs 10 \
 
 #### Run training
 
-To run the traning code, simply run the following
+To run the training code, simply run the following
 
 ```
 python train.py --task=assembly144 --agent=transporter --n_demos=1000 --n_rotations=144
@@ -75,5 +75,5 @@ Test
 
 
 ```
-python test.py --assets_root=./ravens/environments/assets/ --disp=True --task=assembly144 --agent=transporter --n_demos=1000 --n_steps=100000 --n_rotations=144
+python test.py --disp=True --task=assembly144 --agent=transporter --n_demos=1000 --n_steps=100000 --n_rotations=144
 ```
