@@ -20,7 +20,6 @@ class AssemblingKitsSolver(MPSolver):
             joint_acc_limits=0.5,
             debug=debug,
             vis=vis,
-            # obs_mode="rgbd",
             gripper_type="gripper",
             **kwargs
         )

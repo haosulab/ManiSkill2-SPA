@@ -8,7 +8,7 @@ This repo provides a transporter networks baseline to solve the AssemblingKits t
 
 First create a new maniskill2 conda environment if you have not already.
 
-Then follow the installation instructions on the [transporter networks github repo (called ravens]()
+Then follow the installation instructions on the [transporter networks github repo (called ravens)]()
 
 
 You can upgrade tensorflow to 2.10.0 if 2.3.0 does not work
@@ -27,6 +27,18 @@ pip install --upgrade git+https://github.com/Jiayuan-Gu/pymp.git
 After installing everything, make sure to `cd` into this folder.
 
 ### Evaluation
+
+We have a pretrained model on google drive, download it here
+
+To then test the model, run
+
+```
+python test_suction.py \
+    --model="assembly144-transporter-1000-0" --n-steps=10000 --n-rotations=144
+```
+
+You can also use `test_gripper.py` to test with the two-finger gripper instead of suction gripper.
+
 
 ### Training 
 

@@ -210,8 +210,6 @@ class MPSolver:
             ortho: whether to orthogonalize closing  w.r.t. approaching.
         """
 
-        # NOTE(jigu): DO NOT USE `x.extents`,
-        # which is inconsistent with `x.primitive.transform`!
         extents = np.array(obb.primitive.extents)
         T = np.array(obb.primitive.transform)
 

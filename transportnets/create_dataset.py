@@ -118,8 +118,8 @@ def convert_state_representation(keys, args, worker_id, main_process_id):
                 "rewards": reward,
                 
             }
-            # import ipdb;ipdb.set_trace()
             if i == 0:
+                # At the first step, we simply record the observation and the object pose and target pose, which serves as our "action"
                 transport_data.append(dict(
                     obs=obs,
                     p=env.obj.pose.p,
@@ -127,36 +127,19 @@ def convert_state_representation(keys, args, worker_id, main_process_id):
                 ))
                 item_i = GDict(transport_data[-1]).f64_to_f32()
                 replay.push(item_i)
-                
                 target_q = np.array([0, 0, env.objects_rot[env.object_id]])
                 target_q = euler2quat(*target_q)
-                # import ipdb;ipdb.set_trace()
                 target_p = env.objects_pos[env.object_id]
                 transport_data.append(dict(
                     obs=obs,
                     p=target_p,
                     q=target_q
                 ))
-                # print(target_p, target_q)
                 item_i = GDict(transport_data[-1]).f64_to_f32()
                 replay.push(item_i)
                 break
-            # elif i == length - 1:
-            #     print("==== FINAL OBJ POSE", env.obj.pose.p, env.obj.pose.q)
-            #     import ipdb;ipdb.set_trace()
-            #     transport_data.append(dict(
-            #         obs=obs,
-            #         p=env.obj.pose.p,
-            #         q=env.obj.pose.q
-            #     ))
-            #     item_i = GDict(transport_data[-1]).f64_to_f32()
-            #     replay.push(item_i)
             if args.with_next:
                 item_i["next_obs"] = next_obs
-
-            # item_i = GDict(item_i).f64_to_f32()
-            
-            # import ipdb;ipdb.set_trace()
             
             if args.render:
                 if args.debug:

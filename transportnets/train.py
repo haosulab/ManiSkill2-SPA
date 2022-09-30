@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Code adapted for ManiSkill2
+
 """Ravens main training script."""
 
 import datetime
@@ -28,7 +30,7 @@ import tensorflow as tf
 
 flags.DEFINE_string('train_dir', '.', '')
 flags.DEFINE_string('data_dir', '.', '')
-flags.DEFINE_string('task', 'hanoi', '')
+flags.DEFINE_string('task', 'assembly', '')
 flags.DEFINE_string('agent', 'transporter', '')
 flags.DEFINE_float('hz', 240, '')
 flags.DEFINE_integer('n_demos', 100, '')
@@ -77,7 +79,6 @@ def main(unused_argv):
     
     agent = agents.names[FLAGS.agent](name, FLAGS.task, FLAGS.train_dir, FLAGS.n_rotations)
 
-    # agent.load(15500)
     # Limit random sampling during training to a fixed dataset.
     max_demos = train_dataset.n_episodes
     episodes = np.random.choice(range(max_demos), FLAGS.n_demos, False)
