@@ -23,7 +23,8 @@ import os
 from absl import app
 from absl import flags
 import numpy as np
-from ravens import agents
+# from ravens import agents
+from .transporter import OriginalTransporterAgent
 from ravens.dataset import Dataset
 from dataset import DatasetManiskill
 import tensorflow as tf
@@ -77,7 +78,8 @@ def main(unused_argv):
     np.random.seed(train_run)
     tf.random.set_seed(train_run)
     
-    agent = agents.names[FLAGS.agent](name, FLAGS.task, FLAGS.train_dir, FLAGS.n_rotations)
+    # agent = agents.names[FLAGS.agent](name, FLAGS.task, FLAGS.train_dir, FLAGS.n_rotations)
+    agent = OriginalTransporterAgent(name, FLAGS.task, FLAGS.train_dir, FLAGS.n_rotations)
 
     # Limit random sampling during training to a fixed dataset.
     max_demos = train_dataset.n_episodes

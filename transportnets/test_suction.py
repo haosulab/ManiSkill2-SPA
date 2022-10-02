@@ -214,6 +214,8 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description="Generate visual observations of trajectories given environment states.")
     # Configurations
+    parser.add_argument("--render",
+                        action="store_true", help="Render the solution")
     parser.add_argument("--n-steps", default=10000,
                         type=int, help="Model checkpoint to use")
     parser.add_argument("--model", required=True,

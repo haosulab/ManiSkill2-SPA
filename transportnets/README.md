@@ -8,6 +8,11 @@ This repo provides a transporter networks baseline to solve the AssemblingKits t
 
 First create a new maniskill2 conda environment if you have not already.
 
+
+```
+git clone https://github.com/google-research/ravens.git
+```
+
 Then follow the installation instructions on the [transporter networks github repo (called ravens)]()
 
 
