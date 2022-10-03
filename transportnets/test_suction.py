@@ -244,7 +244,6 @@ def parse_args():
         f"Evaluating Suction Gripper with Transporter Networks on AssemblingKits. Results will be saved to {args.output_name}")
     print(
         f"Loading checkpoint {args.n_steps} of model saved at {full_model_path}")
-    import ipdb;ipdb.set_trace()
     return args
 
 

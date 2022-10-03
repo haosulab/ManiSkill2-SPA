@@ -24,7 +24,7 @@ from absl import app
 from absl import flags
 import numpy as np
 # from ravens import agents
-from .transporter import OriginalTransporterAgent
+from transporter import OriginalTransporterAgent
 from ravens.dataset import Dataset
 from dataset import DatasetManiskill
 import tensorflow as tf

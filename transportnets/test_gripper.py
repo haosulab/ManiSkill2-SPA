@@ -8,11 +8,12 @@ import json
 from solver import MPSolver
 from ravens import agents
 import tensorflow as tf
+from transporter import OriginalTransporterAgent
 import transforms3d
 from ravens.utils import utils
 
 class AssemblingKitsSolver(MPSolver):
-    def __init__(self, debug=False, vis=False, **kwargs):
+    def __init__(self, model_name="assembly144-transporter-1000-0", model_n_step=10000, root_dir=".", n_rotations=144, debug=False, vis=False, **kwargs):
         super().__init__(
             env_name="AssemblingKits-v0",
             ee_link="panda_hand_tcp",
@@ -32,7 +33,7 @@ class AssemblingKitsSolver(MPSolver):
 
         np.random.seed(0)
         tf.random.set_seed(0)
-        agent = agents.names["transporter"]("assembly144-transporter-1000-0","assembly", ".", n_rotations=144)
+        agent = OriginalTransporterAgent("assembly144-transporter-1000-0","assembly", ".", n_rotations=144)
         agent.load(100000)
         
         self.agent=agent
@@ -174,23 +175,27 @@ class AssemblingKitsSolver(MPSolver):
 
         return self.info
 
+def main(args):
+    episode_cfg_path = args.json_name
 
-
-def main(episode_cfg_path):
     np.random.seed(0)
-    solver = AssemblingKitsSolver(debug=False, vis=False)
-    results = []
+    solver = AssemblingKitsSolver(
+        model_name=args.model, model_n_step=args.n_steps, root_dir=args.root_dir, n_rotations=args.n_rotations, debug=False, vis=args.render)
     
+
     with open(episode_cfg_path, "r") as f:
         episode_cfgs = json.load(f)["episodes"]
-    for episode_cfg in tqdm(episode_cfgs[:]):
+
+    results = []
+    for episode_cfg in tqdm(episode_cfgs):
         reset_kwargs = episode_cfg["reset_kwargs"]
         r = solver.solve(**reset_kwargs)
-        print(reset_kwargs)
-        print(r)
+        if args.verbose > 0:
+            print(reset_kwargs)
+            print(r)
         results.append(r)
-    
-    with open(f"results_gripper_{episode_cfg_path}.pkl", "wb") as f:
+
+    with open(args.output_name, "wb") as f:
         pickle.dump(results, f)
     success = np.array([r["success"] for r in results])
 
@@ -201,8 +206,49 @@ def main(episode_cfg_path):
     ravens_success = (pos_correct & rot_correct)
 
     in_slot = np.array([r["in_slot"] for r in results])
-    # Success: 0.18, Ravens Success: 0.96 pos correct: 0.99, rot_correct: 0.96, in_slot: 0.18
     print(f"Success: {success.mean()}, Ravens Success: {ravens_success.mean()} pos correct: {pos_correct.mean()}, rot_correct: {rot_correct.mean()}, in_slot: {in_slot.mean()}")
 
+def parse_args():
+    import argparse
+    import os.path as osp
+    parser = argparse.ArgumentParser(
+        description="Generate visual observations of trajectories given environment states.")
+    # Configurations
+    parser.add_argument("--render",
+                        action="store_true", help="Render the solution")
+    parser.add_argument("--n-steps", default=10000,
+                        type=int, help="Model checkpoint to use")
+    parser.add_argument("-v", "--verbose", default=0,
+                        type=int, help="Verbosity. 1 = verbose, 0 = none")
+    parser.add_argument("--model", required=True,
+                        help="Name of the model to use. Loaded checkpoint path will be <root_dir>/checkpoints/<model>. Note root_dir is also an argument to this script")
+    parser.add_argument("--json-name", required=True, type=str,
+                        help="""
+        Input json path, e.g. pickcube_pd_joint_delta_pos.json |
+        **Json file that contains reset_kwargs is required for properly rendering demonstrations.
+        This is because for environments using more than one assets, asset is different upon each environment reset,
+        and asset info is only contained in the json file, not in the trajectory file.
+        For environments that use a single asset with randomized dimensions, the seed info controls the specific dimension
+        used in a certain trajectory, and this info is only contained in the json file.**
+        """)
+    parser.add_argument("--output-name",
+                        type=str, help="Output of results of this evaluation script")
+    parser.add_argument("--root-dir", default=".",
+                        type=str, help="Working directory (where checkpoints is located)")
+    parser.add_argument("--n-rotations", default=144,
+                        type=int, help="Number of binned rotations to predict. Must be the same as used when training with train.py for the selected model")
+    args = parser.parse_args()
+
+    full_model_path = osp.join(args.root_dir, "checkpoints", args.model)
+    if args.output_name is None:
+        args.output_name = f"results_suction_{args.json_name}.pkl"
+    print(
+        f"Evaluating Suction Gripper with Transporter Networks on AssemblingKits. Results will be saved to {args.output_name}")
+    print(
+        f"Loading checkpoint {args.n_steps} of model saved at {full_model_path}")
+    return args
+
+
 if __name__ == "__main__":
-    main("AssemblingKits-v0.train.stage1.json")
+    args = parse_args()
+    main(args)

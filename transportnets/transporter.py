@@ -24,7 +24,7 @@ from ravens.models.transport_ablation import TransportPerPixelLoss
 from ravens.models.transport_goal import TransportGoal
 from ravens.tasks import cameras
 from ravens.utils import utils
-from .utils import vision as maniskill_utils
+from utils import vision as maniskill_utils
 import tensorflow as tf
 
 
