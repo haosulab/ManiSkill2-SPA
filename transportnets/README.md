@@ -13,7 +13,7 @@ First create a new maniskill2 conda environment if you have not already.
 git clone https://github.com/google-research/ravens.git
 ```
 
-Then follow the installation instructions on the [transporter networks github repo (called ravens)]()
+Then follow the installation instructions on the [transporter networks github repo (called ravens)](github.com/google-research/ravens)
 
 
 You can upgrade tensorflow to 2.10.0 if 2.3.0 does not work
@@ -33,16 +33,15 @@ After installing everything, make sure to `cd` into this folder.
 
 ### Evaluation
 
-We have a pretrained model on google drive, download it here
+We have a pretrained model on google drive, download it here [TODO]
 
 To then test the model, run
-
 ```
-python test_suction.py \
-    --model="assembly144-transporter-1000-0" --n-steps=10000 --n-rotations=144
+python test_gripper.py \
+    --model="assembly144-transporter-1000-0" --n-steps=100000 --n-rotations=144 --json-name="train_episodes.json"
 ```
 
-You can also use `test_gripper.py` to test with the two-finger gripper instead of suction gripper.
+You can also use `test_suction.py` to test with the suction gripper instead of a two-finger gripper. The pretrained models should get around 15-20% success rate of slotting in the piece into the assembly kit.
 
 
 ### Training 
@@ -51,20 +50,22 @@ As our AssemblingKits environment looks different to the ravens environment and 
 
 
 #### Generate data
-To generate the dataset, run
+To generate the dataset, first download the demonstrations for AssemblingKits from [Maniskill2](https://github.com/haosulab/Maniskill2). These demonstrations are simply used to generate the initial RGBD images of the assembly kit and the initial and goal poses.
+
+Once the demos are saved to a local `demos` folder, run the following
 
 ```
 python create_dataset.py --env-name AssemblingKits-v0 --num-procs 10 \
     --traj-name demos/AssemblingKits-v0/trajectory.h5 \
     --json-name demos/AssemblingKits-v0/trajectory.json \
-    --output-name demos/AssemblingKits-v0/trajectory.pd_joint_delta_pos_rgbd_train_1000.h5 \
+    --output-name train_1000.h5 \
     --control-mode pd_joint_delta_pos --max-num-traj 1000 --obs-mode rgbd \
     --n-points 1200 --obs-frame base --reward-mode dense --render
 
 python create_dataset.py --env-name AssemblingKits-v0 --num-procs 10 \
     --traj-name demos/AssemblingKits-v0/trajectory.h5 \
     --json-name demos/AssemblingKits-v0/trajectory.json \
-    --output-name demos/AssemblingKits-v0/trajectory.pd_joint_delta_pos_rgbd_test_600.h5 \
+    --output-name test_600.h5 \
     --control-mode pd_joint_delta_pos --max-num-traj 600 --obs-mode rgbd \
     --n-points 1200 --obs-frame base --reward-mode dense --render --test-split
 ```
@@ -74,23 +75,7 @@ python create_dataset.py --env-name AssemblingKits-v0 --num-procs 10 \
 To run the training code, simply run the following
 
 ```
-python train.py --task=assembly144 --agent=transporter --n_demos=1000 --n_rotations=144
+python train.py --task=assembly144 --agent=transporter --n_demos=1000 --n_rotations=144 
 ```
 
-
-# Train/Test
-
-
-Train
-
-```
-python train.py --task=assembly144 --agent=transporter --n_demos=1000 --n_rotations=144
-```
-
-
-Test
-
-
-```
-python test.py --disp=True --task=assembly144 --agent=transporter --n_demos=1000 --n_steps=100000 --n_rotations=144
-```
+which will save models to `checkpoints/assembly144-transporter-1000-0`.

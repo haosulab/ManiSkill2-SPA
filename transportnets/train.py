@@ -30,14 +30,15 @@ from dataset import DatasetManiskill
 import tensorflow as tf
 
 flags.DEFINE_string('train_dir', '.', '')
-flags.DEFINE_string('data_dir', '.', '')
+flags.DEFINE_string('train_data', 'train_1000.h5', '')
+flags.DEFINE_string('test_data', 'test_600.h5', '')
 flags.DEFINE_string('task', 'assembly', '')
 flags.DEFINE_string('agent', 'transporter', '')
 flags.DEFINE_float('hz', 240, '')
 flags.DEFINE_integer('n_demos', 100, '')
-flags.DEFINE_integer('n_steps', 40000, '')
+flags.DEFINE_integer('n_steps', 100000, '')
 flags.DEFINE_integer('n_runs', 1, '')
-flags.DEFINE_integer('interval', 1000, '')
+flags.DEFINE_integer('interval', 5000, '')
 flags.DEFINE_integer('gpu', 0, '')
 flags.DEFINE_integer('gpu_limit', None, '')
 flags.DEFINE_integer('n_rotations', 36, '')
@@ -61,8 +62,8 @@ def main(unused_argv):
     cfg.set_virtual_device_configuration(gpus[0], dev_cfg)
 
   # Load train and test datasets.
-  train_dataset = DatasetManiskill(os.path.join(FLAGS.data_dir, f'{FLAGS.task}-train'))
-  test_dataset = DatasetManiskill(os.path.join(FLAGS.data_dir, f'{FLAGS.task}-test'))
+  train_dataset = DatasetManiskill(FLAGS.train_data)
+  test_dataset = DatasetManiskill(FLAGS.test_data)
 
   # Run training from scratch multiple times.
   for train_run in range(FLAGS.n_runs):

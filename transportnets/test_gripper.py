@@ -33,8 +33,8 @@ class AssemblingKitsSolver(MPSolver):
 
         np.random.seed(0)
         tf.random.set_seed(0)
-        agent = OriginalTransporterAgent("assembly144-transporter-1000-0","assembly", ".", n_rotations=144)
-        agent.load(100000)
+        agent = OriginalTransporterAgent(model_name,"assembly", root_dir, n_rotations=n_rotations)
+        agent.load(model_n_step)
         
         self.agent=agent
 

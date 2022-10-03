@@ -45,11 +45,6 @@ class DatasetManiskill:
 
     # Track existing dataset if it exists.
     import h5py
-    if "train" in path:
-      # TODO remove hardcode
-      path = "../../demos/AssemblingKits-v0/trajectory.pd_joint_delta_pos_rgbd_train_1000.h5"
-    else:
-      path = "../../demos/AssemblingKits-v0/trajectory.pd_joint_delta_pos_rgbd_test_600.h5"
     self.data=h5py.File(path)
     self.n_episodes = len(self.data.keys())
     self._cache = {}

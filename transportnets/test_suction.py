@@ -9,6 +9,7 @@ from solver import MPSolver
 from ravens import agents
 import tensorflow as tf
 import transforms3d
+from transporter import OriginalTransporterAgent
 from ravens.utils import utils
 
 
@@ -33,8 +34,7 @@ class AssemblingKitsSolver(MPSolver):
 
         np.random.seed(0)
         tf.random.set_seed(0)
-        agent = agents.names["transporter"](
-            model_name, "assembly", root_dir, n_rotations=n_rotations)
+        agent = OriginalTransporterAgent(model_name,"assembly", root_dir, n_rotations=n_rotations)
         agent.load(model_n_step)
 
         self.agent = agent

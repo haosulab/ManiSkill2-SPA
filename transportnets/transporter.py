@@ -221,7 +221,6 @@ class TransporterAgent:
     p1_xyz = utils.pix_to_xyz(p1_pix, hmap, self.bounds, self.pix_size)
     p0_xyzw = utils.eulerXYZ_to_quatXYZW((0, 0, -p0_theta))
     p1_xyzw = utils.eulerXYZ_to_quatXYZW((0, 0, -p1_theta))
-    np.save("act", (pick_conf, p0_pix, place_conf, p1_pix, img))
     return {
         'pose0': (np.asarray(p0_xyz), np.asarray(p0_xyzw)),
         'pose1': (np.asarray(p1_xyz), np.asarray(p1_xyzw))
