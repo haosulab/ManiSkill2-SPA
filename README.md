@@ -2,11 +2,7 @@
 
 This repository contains some baselines that tackle tasks using the SPA (Sense Plan Act) paradigm. Currently we have baselines using
 
-- [Contact Grasp Net]
-- [Transporter Networks]
+- [Contact Grasp Net](https://github.com/haosulab/ManiSkill2-SPA/tree/main/contact_grasp_net)
+- [Transporter Networks](https://github.com/haosulab/ManiSkill2-SPA/tree/main/transportnets)
 
-## Getting Started
-
-### Installation
-
-First install [ManiSkill2](https://github.com/haosulab/ManiSkill2) and create a conda environment. Each baseline is written in isolation, we do not guarantee that installing dependencies for multiple baselines will work.
+Click the links to learn how to run and/or train the baselines. As each baseline is it's own isolated folder with it's own installation instructions and dependencies, make sure to read the installation instructions carefully.
