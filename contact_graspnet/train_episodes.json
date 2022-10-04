@@ -1,0 +1,2601 @@
+{
+  "env_info": {
+    "env_id": "PickSingleYCB-v0",
+    "env_kwargs": {
+      "asset_root": "{ASSET_DIR}/mani_skill2_ycb",
+      "model_json": "info_pick_v0.json"
+    }
+  },
+  "episodes": [
+    {
+      "episode_id": 0,
+      "reset_kwargs": {
+        "seed": 3911575984,
+        "model_id": "002_master_chef_can"
+      }
+    },
+    {
+      "episode_id": 1,
+      "reset_kwargs": {
+        "seed": 2175494385,
+        "model_id": "002_master_chef_can"
+      }
+    },
+    {
+      "episode_id": 2,
+      "reset_kwargs": {
+        "seed": 4274851143,
+        "model_id": "002_master_chef_can"
+      }
+    },
+    {
+      "episode_id": 3,
+      "reset_kwargs": {
+        "seed": 1935944542,
+        "model_id": "002_master_chef_can"
+      }
+    },
+    {
+      "episode_id": 4,
+      "reset_kwargs": {
+        "seed": 1186267420,
+        "model_id": "002_master_chef_can"
+      }
+    },
+    {
+      "episode_id": 5,
+      "reset_kwargs": {
+        "seed": 3321968460,
+        "model_id": "003_cracker_box"
+      }
+    },
+    {
+      "episode_id": 6,
+      "reset_kwargs": {
+        "seed": 2109690441,
+        "model_id": "003_cracker_box"
+      }
+    },
+    {
+      "episode_id": 7,
+      "reset_kwargs": {
+        "seed": 1153408280,
+        "model_id": "003_cracker_box"
+      }
+    },
+    {
+      "episode_id": 8,
+      "reset_kwargs": {
+        "seed": 598111854,
+        "model_id": "003_cracker_box"
+      }
+    },
+    {
+      "episode_id": 9,
+      "reset_kwargs": {
+        "seed": 574484715,
+        "model_id": "003_cracker_box"
+      }
+    },
+    {
+      "episode_id": 10,
+      "reset_kwargs": {
+        "seed": 104041667,
+        "model_id": "004_sugar_box"
+      }
+    },
+    {
+      "episode_id": 11,
+      "reset_kwargs": {
+        "seed": 4204053514,
+        "model_id": "004_sugar_box"
+      }
+    },
+    {
+      "episode_id": 12,
+      "reset_kwargs": {
+        "seed": 3580274218,
+        "model_id": "004_sugar_box"
+      }
+    },
+    {
+      "episode_id": 13,
+      "reset_kwargs": {
+        "seed": 3106936208,
+        "model_id": "004_sugar_box"
+      }
+    },
+    {
+      "episode_id": 14,
+      "reset_kwargs": {
+        "seed": 4267807873,
+        "model_id": "004_sugar_box"
+      }
+    },
+    {
+      "episode_id": 15,
+      "reset_kwargs": {
+        "seed": 1749798089,
+        "model_id": "005_tomato_soup_can"
+      }
+    },
+    {
+      "episode_id": 16,
+      "reset_kwargs": {
+        "seed": 967430018,
+        "model_id": "005_tomato_soup_can"
+      }
+    },
+    {
+      "episode_id": 17,
+      "reset_kwargs": {
+        "seed": 2155912863,
+        "model_id": "005_tomato_soup_can"
+      }
+    },
+    {
+      "episode_id": 18,
+      "reset_kwargs": {
+        "seed": 1173839905,
+        "model_id": "005_tomato_soup_can"
+      }
+    },
+    {
+      "episode_id": 19,
+      "reset_kwargs": {
+        "seed": 200617100,
+        "model_id": "005_tomato_soup_can"
+      }
+    },
+    {
+      "episode_id": 20,
+      "reset_kwargs": {
+        "seed": 1143338698,
+        "model_id": "006_mustard_bottle"
+      }
+    },
+    {
+      "episode_id": 21,
+      "reset_kwargs": {
+        "seed": 2369003234,
+        "model_id": "006_mustard_bottle"
+      }
+    },
+    {
+      "episode_id": 22,
+      "reset_kwargs": {
+        "seed": 1603790993,
+        "model_id": "006_mustard_bottle"
+      }
+    },
+    {
+      "episode_id": 23,
+      "reset_kwargs": {
+        "seed": 3014666844,
+        "model_id": "006_mustard_bottle"
+      }
+    },
+    {
+      "episode_id": 24,
+      "reset_kwargs": {
+        "seed": 110291081,
+        "model_id": "006_mustard_bottle"
+      }
+    },
+    {
+      "episode_id": 25,
+      "reset_kwargs": {
+        "seed": 3891003259,
+        "model_id": "007_tuna_fish_can"
+      }
+    },
+    {
+      "episode_id": 26,
+      "reset_kwargs": {
+        "seed": 3115396892,
+        "model_id": "007_tuna_fish_can"
+      }
+    },
+    {
+      "episode_id": 27,
+      "reset_kwargs": {
+        "seed": 3227916210,
+        "model_id": "007_tuna_fish_can"
+      }
+    },
+    {
+      "episode_id": 28,
+      "reset_kwargs": {
+        "seed": 2302578352,
+        "model_id": "007_tuna_fish_can"
+      }
+    },
+    {
+      "episode_id": 29,
+      "reset_kwargs": {
+        "seed": 3560358981,
+        "model_id": "007_tuna_fish_can"
+      }
+    },
+    {
+      "episode_id": 30,
+      "reset_kwargs": {
+        "seed": 1439978693,
+        "model_id": "008_pudding_box"
+      }
+    },
+    {
+      "episode_id": 31,
+      "reset_kwargs": {
+        "seed": 2616690293,
+        "model_id": "008_pudding_box"
+      }
+    },
+    {
+      "episode_id": 32,
+      "reset_kwargs": {
+        "seed": 357218597,
+        "model_id": "008_pudding_box"
+      }
+    },
+    {
+      "episode_id": 33,
+      "reset_kwargs": {
+        "seed": 88259328,
+        "model_id": "008_pudding_box"
+      }
+    },
+    {
+      "episode_id": 34,
+      "reset_kwargs": {
+        "seed": 897981835,
+        "model_id": "008_pudding_box"
+      }
+    },
+    {
+      "episode_id": 35,
+      "reset_kwargs": {
+        "seed": 1381063063,
+        "model_id": "009_gelatin_box"
+      }
+    },
+    {
+      "episode_id": 36,
+      "reset_kwargs": {
+        "seed": 3722952951,
+        "model_id": "009_gelatin_box"
+      }
+    },
+    {
+      "episode_id": 37,
+      "reset_kwargs": {
+        "seed": 1114032885,
+        "model_id": "009_gelatin_box"
+      }
+    },
+    {
+      "episode_id": 38,
+      "reset_kwargs": {
+        "seed": 2028917654,
+        "model_id": "009_gelatin_box"
+      }
+    },
+    {
+      "episode_id": 39,
+      "reset_kwargs": {
+        "seed": 2259742951,
+        "model_id": "009_gelatin_box"
+      }
+    },
+    {
+      "episode_id": 40,
+      "reset_kwargs": {
+        "seed": 227795938,
+        "model_id": "010_potted_meat_can"
+      }
+    },
+    {
+      "episode_id": 41,
+      "reset_kwargs": {
+        "seed": 651129324,
+        "model_id": "010_potted_meat_can"
+      }
+    },
+    {
+      "episode_id": 42,
+      "reset_kwargs": {
+        "seed": 3611254773,
+        "model_id": "010_potted_meat_can"
+      }
+    },
+    {
+      "episode_id": 43,
+      "reset_kwargs": {
+        "seed": 1651090742,
+        "model_id": "010_potted_meat_can"
+      }
+    },
+    {
+      "episode_id": 44,
+      "reset_kwargs": {
+        "seed": 633148175,
+        "model_id": "010_potted_meat_can"
+      }
+    },
+    {
+      "episode_id": 45,
+      "reset_kwargs": {
+        "seed": 3049647418,
+        "model_id": "011_banana"
+      }
+    },
+    {
+      "episode_id": 46,
+      "reset_kwargs": {
+        "seed": 189108905,
+        "model_id": "011_banana"
+      }
+    },
+    {
+      "episode_id": 47,
+      "reset_kwargs": {
+        "seed": 1169923422,
+        "model_id": "011_banana"
+      }
+    },
+    {
+      "episode_id": 48,
+      "reset_kwargs": {
+        "seed": 3885708630,
+        "model_id": "011_banana"
+      }
+    },
+    {
+      "episode_id": 49,
+      "reset_kwargs": {
+        "seed": 2277046551,
+        "model_id": "011_banana"
+      }
+    },
+    {
+      "episode_id": 50,
+      "reset_kwargs": {
+        "seed": 813835201,
+        "model_id": "012_strawberry"
+      }
+    },
+    {
+      "episode_id": 51,
+      "reset_kwargs": {
+        "seed": 1207260698,
+        "model_id": "012_strawberry"
+      }
+    },
+    {
+      "episode_id": 52,
+      "reset_kwargs": {
+        "seed": 3630431854,
+        "model_id": "012_strawberry"
+      }
+    },
+    {
+      "episode_id": 53,
+      "reset_kwargs": {
+        "seed": 2142425255,
+        "model_id": "012_strawberry"
+      }
+    },
+    {
+      "episode_id": 54,
+      "reset_kwargs": {
+        "seed": 1028423786,
+        "model_id": "012_strawberry"
+      }
+    },
+    {
+      "episode_id": 55,
+      "reset_kwargs": {
+        "seed": 2329772255,
+        "model_id": "013_apple"
+      }
+    },
+    {
+      "episode_id": 56,
+      "reset_kwargs": {
+        "seed": 3728435606,
+        "model_id": "013_apple"
+      }
+    },
+    {
+      "episode_id": 57,
+      "reset_kwargs": {
+        "seed": 800263997,
+        "model_id": "013_apple"
+      }
+    },
+    {
+      "episode_id": 58,
+      "reset_kwargs": {
+        "seed": 585335493,
+        "model_id": "013_apple"
+      }
+    },
+    {
+      "episode_id": 59,
+      "reset_kwargs": {
+        "seed": 2198120066,
+        "model_id": "013_apple"
+      }
+    },
+    {
+      "episode_id": 60,
+      "reset_kwargs": {
+        "seed": 2073101961,
+        "model_id": "014_lemon"
+      }
+    },
+    {
+      "episode_id": 61,
+      "reset_kwargs": {
+        "seed": 4089333118,
+        "model_id": "014_lemon"
+      }
+    },
+    {
+      "episode_id": 62,
+      "reset_kwargs": {
+        "seed": 2545065152,
+        "model_id": "014_lemon"
+      }
+    },
+    {
+      "episode_id": 63,
+      "reset_kwargs": {
+        "seed": 1276027305,
+        "model_id": "014_lemon"
+      }
+    },
+    {
+      "episode_id": 64,
+      "reset_kwargs": {
+        "seed": 3813851326,
+        "model_id": "014_lemon"
+      }
+    },
+    {
+      "episode_id": 65,
+      "reset_kwargs": {
+        "seed": 1408066954,
+        "model_id": "015_peach"
+      }
+    },
+    {
+      "episode_id": 66,
+      "reset_kwargs": {
+        "seed": 907356309,
+        "model_id": "015_peach"
+      }
+    },
+    {
+      "episode_id": 67,
+      "reset_kwargs": {
+        "seed": 1215346039,
+        "model_id": "015_peach"
+      }
+    },
+    {
+      "episode_id": 68,
+      "reset_kwargs": {
+        "seed": 2799689745,
+        "model_id": "015_peach"
+      }
+    },
+    {
+      "episode_id": 69,
+      "reset_kwargs": {
+        "seed": 3831982319,
+        "model_id": "015_peach"
+      }
+    },
+    {
+      "episode_id": 70,
+      "reset_kwargs": {
+        "seed": 3743996022,
+        "model_id": "016_pear"
+      }
+    },
+    {
+      "episode_id": 71,
+      "reset_kwargs": {
+        "seed": 464295879,
+        "model_id": "016_pear"
+      }
+    },
+    {
+      "episode_id": 72,
+      "reset_kwargs": {
+        "seed": 1131323123,
+        "model_id": "016_pear"
+      }
+    },
+    {
+      "episode_id": 73,
+      "reset_kwargs": {
+        "seed": 223523711,
+        "model_id": "016_pear"
+      }
+    },
+    {
+      "episode_id": 74,
+      "reset_kwargs": {
+        "seed": 1594891867,
+        "model_id": "016_pear"
+      }
+    },
+    {
+      "episode_id": 75,
+      "reset_kwargs": {
+        "seed": 3981338214,
+        "model_id": "017_orange"
+      }
+    },
+    {
+      "episode_id": 76,
+      "reset_kwargs": {
+        "seed": 2717867016,
+        "model_id": "017_orange"
+      }
+    },
+    {
+      "episode_id": 77,
+      "reset_kwargs": {
+        "seed": 541894254,
+        "model_id": "017_orange"
+      }
+    },
+    {
+      "episode_id": 78,
+      "reset_kwargs": {
+        "seed": 1923408386,
+        "model_id": "017_orange"
+      }
+    },
+    {
+      "episode_id": 79,
+      "reset_kwargs": {
+        "seed": 3673670709,
+        "model_id": "017_orange"
+      }
+    },
+    {
+      "episode_id": 80,
+      "reset_kwargs": {
+        "seed": 3780032282,
+        "model_id": "018_plum"
+      }
+    },
+    {
+      "episode_id": 81,
+      "reset_kwargs": {
+        "seed": 1086034953,
+        "model_id": "018_plum"
+      }
+    },
+    {
+      "episode_id": 82,
+      "reset_kwargs": {
+        "seed": 3186143442,
+        "model_id": "018_plum"
+      }
+    },
+    {
+      "episode_id": 83,
+      "reset_kwargs": {
+        "seed": 3038804504,
+        "model_id": "018_plum"
+      }
+    },
+    {
+      "episode_id": 84,
+      "reset_kwargs": {
+        "seed": 958933966,
+        "model_id": "018_plum"
+      }
+    },
+    {
+      "episode_id": 85,
+      "reset_kwargs": {
+        "seed": 141390285,
+        "model_id": "019_pitcher_base"
+      }
+    },
+    {
+      "episode_id": 86,
+      "reset_kwargs": {
+        "seed": 2376557488,
+        "model_id": "019_pitcher_base"
+      }
+    },
+    {
+      "episode_id": 87,
+      "reset_kwargs": {
+        "seed": 1530669570,
+        "model_id": "019_pitcher_base"
+      }
+    },
+    {
+      "episode_id": 88,
+      "reset_kwargs": {
+        "seed": 436020857,
+        "model_id": "019_pitcher_base"
+      }
+    },
+    {
+      "episode_id": 89,
+      "reset_kwargs": {
+        "seed": 1525622,
+        "model_id": "019_pitcher_base"
+      }
+    },
+    {
+      "episode_id": 90,
+      "reset_kwargs": {
+        "seed": 2602483867,
+        "model_id": "021_bleach_cleanser"
+      }
+    },
+    {
+      "episode_id": 91,
+      "reset_kwargs": {
+        "seed": 465430488,
+        "model_id": "021_bleach_cleanser"
+      }
+    },
+    {
+      "episode_id": 92,
+      "reset_kwargs": {
+        "seed": 1739395823,
+        "model_id": "021_bleach_cleanser"
+      }
+    },
+    {
+      "episode_id": 93,
+      "reset_kwargs": {
+        "seed": 3161548315,
+        "model_id": "021_bleach_cleanser"
+      }
+    },
+    {
+      "episode_id": 94,
+      "reset_kwargs": {
+        "seed": 3673643927,
+        "model_id": "021_bleach_cleanser"
+      }
+    },
+    {
+      "episode_id": 95,
+      "reset_kwargs": {
+        "seed": 776803589,
+        "model_id": "024_bowl"
+      }
+    },
+    {
+      "episode_id": 96,
+      "reset_kwargs": {
+        "seed": 501876438,
+        "model_id": "024_bowl"
+      }
+    },
+    {
+      "episode_id": 97,
+      "reset_kwargs": {
+        "seed": 2074062672,
+        "model_id": "024_bowl"
+      }
+    },
+    {
+      "episode_id": 98,
+      "reset_kwargs": {
+        "seed": 2652905631,
+        "model_id": "024_bowl"
+      }
+    },
+    {
+      "episode_id": 99,
+      "reset_kwargs": {
+        "seed": 1599761613,
+        "model_id": "024_bowl"
+      }
+    },
+    {
+      "episode_id": 100,
+      "reset_kwargs": {
+        "seed": 3720511604,
+        "model_id": "025_mug"
+      }
+    },
+    {
+      "episode_id": 101,
+      "reset_kwargs": {
+        "seed": 2152681865,
+        "model_id": "025_mug"
+      }
+    },
+    {
+      "episode_id": 102,
+      "reset_kwargs": {
+        "seed": 1607226132,
+        "model_id": "025_mug"
+      }
+    },
+    {
+      "episode_id": 103,
+      "reset_kwargs": {
+        "seed": 1095628529,
+        "model_id": "025_mug"
+      }
+    },
+    {
+      "episode_id": 104,
+      "reset_kwargs": {
+        "seed": 1482749819,
+        "model_id": "025_mug"
+      }
+    },
+    {
+      "episode_id": 105,
+      "reset_kwargs": {
+        "seed": 710762016,
+        "model_id": "026_sponge"
+      }
+    },
+    {
+      "episode_id": 106,
+      "reset_kwargs": {
+        "seed": 3725890315,
+        "model_id": "026_sponge"
+      }
+    },
+    {
+      "episode_id": 107,
+      "reset_kwargs": {
+        "seed": 3427353463,
+        "model_id": "026_sponge"
+      }
+    },
+    {
+      "episode_id": 108,
+      "reset_kwargs": {
+        "seed": 3053942202,
+        "model_id": "026_sponge"
+      }
+    },
+    {
+      "episode_id": 109,
+      "reset_kwargs": {
+        "seed": 2268997099,
+        "model_id": "026_sponge"
+      }
+    },
+    {
+      "episode_id": 110,
+      "reset_kwargs": {
+        "seed": 961570314,
+        "model_id": "030_fork"
+      }
+    },
+    {
+      "episode_id": 111,
+      "reset_kwargs": {
+        "seed": 2210317958,
+        "model_id": "030_fork"
+      }
+    },
+    {
+      "episode_id": 112,
+      "reset_kwargs": {
+        "seed": 3918772853,
+        "model_id": "030_fork"
+      }
+    },
+    {
+      "episode_id": 113,
+      "reset_kwargs": {
+        "seed": 45840410,
+        "model_id": "030_fork"
+      }
+    },
+    {
+      "episode_id": 114,
+      "reset_kwargs": {
+        "seed": 1130288766,
+        "model_id": "030_fork"
+      }
+    },
+    {
+      "episode_id": 115,
+      "reset_kwargs": {
+        "seed": 3129266488,
+        "model_id": "031_spoon"
+      }
+    },
+    {
+      "episode_id": 116,
+      "reset_kwargs": {
+        "seed": 236930843,
+        "model_id": "031_spoon"
+      }
+    },
+    {
+      "episode_id": 117,
+      "reset_kwargs": {
+        "seed": 3513362113,
+        "model_id": "031_spoon"
+      }
+    },
+    {
+      "episode_id": 118,
+      "reset_kwargs": {
+        "seed": 2312713863,
+        "model_id": "031_spoon"
+      }
+    },
+    {
+      "episode_id": 119,
+      "reset_kwargs": {
+        "seed": 1093082831,
+        "model_id": "031_spoon"
+      }
+    },
+    {
+      "episode_id": 120,
+      "reset_kwargs": {
+        "seed": 3535792981,
+        "model_id": "032_knife"
+      }
+    },
+    {
+      "episode_id": 121,
+      "reset_kwargs": {
+        "seed": 1856720834,
+        "model_id": "032_knife"
+      }
+    },
+    {
+      "episode_id": 122,
+      "reset_kwargs": {
+        "seed": 2061091477,
+        "model_id": "032_knife"
+      }
+    },
+    {
+      "episode_id": 123,
+      "reset_kwargs": {
+        "seed": 2074334238,
+        "model_id": "032_knife"
+      }
+    },
+    {
+      "episode_id": 124,
+      "reset_kwargs": {
+        "seed": 289381962,
+        "model_id": "032_knife"
+      }
+    },
+    {
+      "episode_id": 125,
+      "reset_kwargs": {
+        "seed": 1303192470,
+        "model_id": "033_spatula"
+      }
+    },
+    {
+      "episode_id": 126,
+      "reset_kwargs": {
+        "seed": 1626380257,
+        "model_id": "033_spatula"
+      }
+    },
+    {
+      "episode_id": 127,
+      "reset_kwargs": {
+        "seed": 120148788,
+        "model_id": "033_spatula"
+      }
+    },
+    {
+      "episode_id": 128,
+      "reset_kwargs": {
+        "seed": 3639935563,
+        "model_id": "033_spatula"
+      }
+    },
+    {
+      "episode_id": 129,
+      "reset_kwargs": {
+        "seed": 671210683,
+        "model_id": "033_spatula"
+      }
+    },
+    {
+      "episode_id": 130,
+      "reset_kwargs": {
+        "seed": 619024552,
+        "model_id": "035_power_drill"
+      }
+    },
+    {
+      "episode_id": 131,
+      "reset_kwargs": {
+        "seed": 1265823525,
+        "model_id": "035_power_drill"
+      }
+    },
+    {
+      "episode_id": 132,
+      "reset_kwargs": {
+        "seed": 2598895521,
+        "model_id": "035_power_drill"
+      }
+    },
+    {
+      "episode_id": 133,
+      "reset_kwargs": {
+        "seed": 2655131193,
+        "model_id": "035_power_drill"
+      }
+    },
+    {
+      "episode_id": 134,
+      "reset_kwargs": {
+        "seed": 329165685,
+        "model_id": "035_power_drill"
+      }
+    },
+    {
+      "episode_id": 135,
+      "reset_kwargs": {
+        "seed": 3664616122,
+        "model_id": "036_wood_block"
+      }
+    },
+    {
+      "episode_id": 136,
+      "reset_kwargs": {
+        "seed": 1274739157,
+        "model_id": "036_wood_block"
+      }
+    },
+    {
+      "episode_id": 137,
+      "reset_kwargs": {
+        "seed": 589674133,
+        "model_id": "036_wood_block"
+      }
+    },
+    {
+      "episode_id": 138,
+      "reset_kwargs": {
+        "seed": 917181838,
+        "model_id": "036_wood_block"
+      }
+    },
+    {
+      "episode_id": 139,
+      "reset_kwargs": {
+        "seed": 3631267306,
+        "model_id": "036_wood_block"
+      }
+    },
+    {
+      "episode_id": 140,
+      "reset_kwargs": {
+        "seed": 3075808836,
+        "model_id": "037_scissors"
+      }
+    },
+    {
+      "episode_id": 141,
+      "reset_kwargs": {
+        "seed": 2052938602,
+        "model_id": "037_scissors"
+      }
+    },
+    {
+      "episode_id": 142,
+      "reset_kwargs": {
+        "seed": 1641209293,
+        "model_id": "037_scissors"
+      }
+    },
+    {
+      "episode_id": 143,
+      "reset_kwargs": {
+        "seed": 689879559,
+        "model_id": "037_scissors"
+      }
+    },
+    {
+      "episode_id": 144,
+      "reset_kwargs": {
+        "seed": 2892597180,
+        "model_id": "037_scissors"
+      }
+    },
+    {
+      "episode_id": 145,
+      "reset_kwargs": {
+        "seed": 2534933700,
+        "model_id": "038_padlock"
+      }
+    },
+    {
+      "episode_id": 146,
+      "reset_kwargs": {
+        "seed": 4195019311,
+        "model_id": "038_padlock"
+      }
+    },
+    {
+      "episode_id": 147,
+      "reset_kwargs": {
+        "seed": 3938452368,
+        "model_id": "038_padlock"
+      }
+    },
+    {
+      "episode_id": 148,
+      "reset_kwargs": {
+        "seed": 1691250589,
+        "model_id": "038_padlock"
+      }
+    },
+    {
+      "episode_id": 149,
+      "reset_kwargs": {
+        "seed": 3607944487,
+        "model_id": "038_padlock"
+      }
+    },
+    {
+      "episode_id": 150,
+      "reset_kwargs": {
+        "seed": 3723147828,
+        "model_id": "040_large_marker"
+      }
+    },
+    {
+      "episode_id": 151,
+      "reset_kwargs": {
+        "seed": 690816505,
+        "model_id": "040_large_marker"
+      }
+    },
+    {
+      "episode_id": 152,
+      "reset_kwargs": {
+        "seed": 1843558572,
+        "model_id": "040_large_marker"
+      }
+    },
+    {
+      "episode_id": 153,
+      "reset_kwargs": {
+        "seed": 2721698218,
+        "model_id": "040_large_marker"
+      }
+    },
+    {
+      "episode_id": 154,
+      "reset_kwargs": {
+        "seed": 2148623724,
+        "model_id": "040_large_marker"
+      }
+    },
+    {
+      "episode_id": 155,
+      "reset_kwargs": {
+        "seed": 3477538364,
+        "model_id": "042_adjustable_wrench"
+      }
+    },
+    {
+      "episode_id": 156,
+      "reset_kwargs": {
+        "seed": 2000954117,
+        "model_id": "042_adjustable_wrench"
+      }
+    },
+    {
+      "episode_id": 157,
+      "reset_kwargs": {
+        "seed": 1692600633,
+        "model_id": "042_adjustable_wrench"
+      }
+    },
+    {
+      "episode_id": 158,
+      "reset_kwargs": {
+        "seed": 4015039011,
+        "model_id": "042_adjustable_wrench"
+      }
+    },
+    {
+      "episode_id": 159,
+      "reset_kwargs": {
+        "seed": 1262085835,
+        "model_id": "042_adjustable_wrench"
+      }
+    },
+    {
+      "episode_id": 160,
+      "reset_kwargs": {
+        "seed": 381292088,
+        "model_id": "043_phillips_screwdriver"
+      }
+    },
+    {
+      "episode_id": 161,
+      "reset_kwargs": {
+        "seed": 3911960468,
+        "model_id": "043_phillips_screwdriver"
+      }
+    },
+    {
+      "episode_id": 162,
+      "reset_kwargs": {
+        "seed": 1386849660,
+        "model_id": "043_phillips_screwdriver"
+      }
+    },
+    {
+      "episode_id": 163,
+      "reset_kwargs": {
+        "seed": 3324133763,
+        "model_id": "043_phillips_screwdriver"
+      }
+    },
+    {
+      "episode_id": 164,
+      "reset_kwargs": {
+        "seed": 1258937546,
+        "model_id": "043_phillips_screwdriver"
+      }
+    },
+    {
+      "episode_id": 165,
+      "reset_kwargs": {
+        "seed": 2688066832,
+        "model_id": "044_flat_screwdriver"
+      }
+    },
+    {
+      "episode_id": 166,
+      "reset_kwargs": {
+        "seed": 1015934749,
+        "model_id": "044_flat_screwdriver"
+      }
+    },
+    {
+      "episode_id": 167,
+      "reset_kwargs": {
+        "seed": 3351998152,
+        "model_id": "044_flat_screwdriver"
+      }
+    },
+    {
+      "episode_id": 168,
+      "reset_kwargs": {
+        "seed": 255871306,
+        "model_id": "044_flat_screwdriver"
+      }
+    },
+    {
+      "episode_id": 169,
+      "reset_kwargs": {
+        "seed": 164750211,
+        "model_id": "044_flat_screwdriver"
+      }
+    },
+    {
+      "episode_id": 170,
+      "reset_kwargs": {
+        "seed": 4009721613,
+        "model_id": "048_hammer"
+      }
+    },
+    {
+      "episode_id": 171,
+      "reset_kwargs": {
+        "seed": 778192082,
+        "model_id": "048_hammer"
+      }
+    },
+    {
+      "episode_id": 172,
+      "reset_kwargs": {
+        "seed": 2115505512,
+        "model_id": "048_hammer"
+      }
+    },
+    {
+      "episode_id": 173,
+      "reset_kwargs": {
+        "seed": 3435517915,
+        "model_id": "048_hammer"
+      }
+    },
+    {
+      "episode_id": 174,
+      "reset_kwargs": {
+        "seed": 707064459,
+        "model_id": "048_hammer"
+      }
+    },
+    {
+      "episode_id": 175,
+      "reset_kwargs": {
+        "seed": 2218493869,
+        "model_id": "050_medium_clamp"
+      }
+    },
+    {
+      "episode_id": 176,
+      "reset_kwargs": {
+        "seed": 4208472903,
+        "model_id": "050_medium_clamp"
+      }
+    },
+    {
+      "episode_id": 177,
+      "reset_kwargs": {
+        "seed": 35627435,
+        "model_id": "050_medium_clamp"
+      }
+    },
+    {
+      "episode_id": 178,
+      "reset_kwargs": {
+        "seed": 3819891458,
+        "model_id": "050_medium_clamp"
+      }
+    },
+    {
+      "episode_id": 179,
+      "reset_kwargs": {
+        "seed": 2978497197,
+        "model_id": "050_medium_clamp"
+      }
+    },
+    {
+      "episode_id": 180,
+      "reset_kwargs": {
+        "seed": 1205076187,
+        "model_id": "051_large_clamp"
+      }
+    },
+    {
+      "episode_id": 181,
+      "reset_kwargs": {
+        "seed": 2955263323,
+        "model_id": "051_large_clamp"
+      }
+    },
+    {
+      "episode_id": 182,
+      "reset_kwargs": {
+        "seed": 749801726,
+        "model_id": "051_large_clamp"
+      }
+    },
+    {
+      "episode_id": 183,
+      "reset_kwargs": {
+        "seed": 3890666037,
+        "model_id": "051_large_clamp"
+      }
+    },
+    {
+      "episode_id": 184,
+      "reset_kwargs": {
+        "seed": 3187591621,
+        "model_id": "051_large_clamp"
+      }
+    },
+    {
+      "episode_id": 185,
+      "reset_kwargs": {
+        "seed": 1249941407,
+        "model_id": "052_extra_large_clamp"
+      }
+    },
+    {
+      "episode_id": 186,
+      "reset_kwargs": {
+        "seed": 926541228,
+        "model_id": "052_extra_large_clamp"
+      }
+    },
+    {
+      "episode_id": 187,
+      "reset_kwargs": {
+        "seed": 2820026939,
+        "model_id": "052_extra_large_clamp"
+      }
+    },
+    {
+      "episode_id": 188,
+      "reset_kwargs": {
+        "seed": 3562036732,
+        "model_id": "052_extra_large_clamp"
+      }
+    },
+    {
+      "episode_id": 189,
+      "reset_kwargs": {
+        "seed": 1640487441,
+        "model_id": "052_extra_large_clamp"
+      }
+    },
+    {
+      "episode_id": 190,
+      "reset_kwargs": {
+        "seed": 2799117657,
+        "model_id": "053_mini_soccer_ball"
+      }
+    },
+    {
+      "episode_id": 191,
+      "reset_kwargs": {
+        "seed": 717620241,
+        "model_id": "053_mini_soccer_ball"
+      }
+    },
+    {
+      "episode_id": 192,
+      "reset_kwargs": {
+        "seed": 1300629478,
+        "model_id": "053_mini_soccer_ball"
+      }
+    },
+    {
+      "episode_id": 193,
+      "reset_kwargs": {
+        "seed": 1086260506,
+        "model_id": "053_mini_soccer_ball"
+      }
+    },
+    {
+      "episode_id": 194,
+      "reset_kwargs": {
+        "seed": 3901573478,
+        "model_id": "053_mini_soccer_ball"
+      }
+    },
+    {
+      "episode_id": 195,
+      "reset_kwargs": {
+        "seed": 2127017153,
+        "model_id": "054_softball"
+      }
+    },
+    {
+      "episode_id": 196,
+      "reset_kwargs": {
+        "seed": 118354860,
+        "model_id": "054_softball"
+      }
+    },
+    {
+      "episode_id": 197,
+      "reset_kwargs": {
+        "seed": 2014575339,
+        "model_id": "054_softball"
+      }
+    },
+    {
+      "episode_id": 198,
+      "reset_kwargs": {
+        "seed": 3910537702,
+        "model_id": "054_softball"
+      }
+    },
+    {
+      "episode_id": 199,
+      "reset_kwargs": {
+        "seed": 651111126,
+        "model_id": "054_softball"
+      }
+    },
+    {
+      "episode_id": 200,
+      "reset_kwargs": {
+        "seed": 2098183735,
+        "model_id": "055_baseball"
+      }
+    },
+    {
+      "episode_id": 201,
+      "reset_kwargs": {
+        "seed": 2335733118,
+        "model_id": "055_baseball"
+      }
+    },
+    {
+      "episode_id": 202,
+      "reset_kwargs": {
+        "seed": 2594738098,
+        "model_id": "055_baseball"
+      }
+    },
+    {
+      "episode_id": 203,
+      "reset_kwargs": {
+        "seed": 1437001444,
+        "model_id": "055_baseball"
+      }
+    },
+    {
+      "episode_id": 204,
+      "reset_kwargs": {
+        "seed": 3749413421,
+        "model_id": "055_baseball"
+      }
+    },
+    {
+      "episode_id": 205,
+      "reset_kwargs": {
+        "seed": 1777287483,
+        "model_id": "056_tennis_ball"
+      }
+    },
+    {
+      "episode_id": 206,
+      "reset_kwargs": {
+        "seed": 3113000268,
+        "model_id": "056_tennis_ball"
+      }
+    },
+    {
+      "episode_id": 207,
+      "reset_kwargs": {
+        "seed": 3808117573,
+        "model_id": "056_tennis_ball"
+      }
+    },
+    {
+      "episode_id": 208,
+      "reset_kwargs": {
+        "seed": 1232095016,
+        "model_id": "056_tennis_ball"
+      }
+    },
+    {
+      "episode_id": 209,
+      "reset_kwargs": {
+        "seed": 1889500802,
+        "model_id": "056_tennis_ball"
+      }
+    },
+    {
+      "episode_id": 210,
+      "reset_kwargs": {
+        "seed": 2550181621,
+        "model_id": "057_racquetball"
+      }
+    },
+    {
+      "episode_id": 211,
+      "reset_kwargs": {
+        "seed": 4143274273,
+        "model_id": "057_racquetball"
+      }
+    },
+    {
+      "episode_id": 212,
+      "reset_kwargs": {
+        "seed": 2914798878,
+        "model_id": "057_racquetball"
+      }
+    },
+    {
+      "episode_id": 213,
+      "reset_kwargs": {
+        "seed": 1942135216,
+        "model_id": "057_racquetball"
+      }
+    },
+    {
+      "episode_id": 214,
+      "reset_kwargs": {
+        "seed": 586486343,
+        "model_id": "057_racquetball"
+      }
+    },
+    {
+      "episode_id": 215,
+      "reset_kwargs": {
+        "seed": 2988472480,
+        "model_id": "058_golf_ball"
+      }
+    },
+    {
+      "episode_id": 216,
+      "reset_kwargs": {
+        "seed": 3837849923,
+        "model_id": "058_golf_ball"
+      }
+    },
+    {
+      "episode_id": 217,
+      "reset_kwargs": {
+        "seed": 210316704,
+        "model_id": "058_golf_ball"
+      }
+    },
+    {
+      "episode_id": 218,
+      "reset_kwargs": {
+        "seed": 2699393541,
+        "model_id": "058_golf_ball"
+      }
+    },
+    {
+      "episode_id": 219,
+      "reset_kwargs": {
+        "seed": 4089967535,
+        "model_id": "058_golf_ball"
+      }
+    },
+    {
+      "episode_id": 220,
+      "reset_kwargs": {
+        "seed": 3082635436,
+        "model_id": "061_foam_brick"
+      }
+    },
+    {
+      "episode_id": 221,
+      "reset_kwargs": {
+        "seed": 1655728651,
+        "model_id": "061_foam_brick"
+      }
+    },
+    {
+      "episode_id": 222,
+      "reset_kwargs": {
+        "seed": 209631343,
+        "model_id": "061_foam_brick"
+      }
+    },
+    {
+      "episode_id": 223,
+      "reset_kwargs": {
+        "seed": 411313617,
+        "model_id": "061_foam_brick"
+      }
+    },
+    {
+      "episode_id": 224,
+      "reset_kwargs": {
+        "seed": 1860643702,
+        "model_id": "061_foam_brick"
+      }
+    },
+    {
+      "episode_id": 225,
+      "reset_kwargs": {
+        "seed": 2551491700,
+        "model_id": "062_dice"
+      }
+    },
+    {
+      "episode_id": 226,
+      "reset_kwargs": {
+        "seed": 1928551442,
+        "model_id": "062_dice"
+      }
+    },
+    {
+      "episode_id": 227,
+      "reset_kwargs": {
+        "seed": 2011162453,
+        "model_id": "062_dice"
+      }
+    },
+    {
+      "episode_id": 228,
+      "reset_kwargs": {
+        "seed": 2961758602,
+        "model_id": "062_dice"
+      }
+    },
+    {
+      "episode_id": 229,
+      "reset_kwargs": {
+        "seed": 516645802,
+        "model_id": "062_dice"
+      }
+    },
+    {
+      "episode_id": 230,
+      "reset_kwargs": {
+        "seed": 2200950169,
+        "model_id": "063-a_marbles"
+      }
+    },
+    {
+      "episode_id": 231,
+      "reset_kwargs": {
+        "seed": 3829198240,
+        "model_id": "063-a_marbles"
+      }
+    },
+    {
+      "episode_id": 232,
+      "reset_kwargs": {
+        "seed": 3525609179,
+        "model_id": "063-a_marbles"
+      }
+    },
+    {
+      "episode_id": 233,
+      "reset_kwargs": {
+        "seed": 599785325,
+        "model_id": "063-a_marbles"
+      }
+    },
+    {
+      "episode_id": 234,
+      "reset_kwargs": {
+        "seed": 1124817683,
+        "model_id": "063-a_marbles"
+      }
+    },
+    {
+      "episode_id": 235,
+      "reset_kwargs": {
+        "seed": 2916784013,
+        "model_id": "063-b_marbles"
+      }
+    },
+    {
+      "episode_id": 236,
+      "reset_kwargs": {
+        "seed": 1001759730,
+        "model_id": "063-b_marbles"
+      }
+    },
+    {
+      "episode_id": 237,
+      "reset_kwargs": {
+        "seed": 3426005332,
+        "model_id": "063-b_marbles"
+      }
+    },
+    {
+      "episode_id": 238,
+      "reset_kwargs": {
+        "seed": 3588505418,
+        "model_id": "063-b_marbles"
+      }
+    },
+    {
+      "episode_id": 239,
+      "reset_kwargs": {
+        "seed": 3983048503,
+        "model_id": "063-b_marbles"
+      }
+    },
+    {
+      "episode_id": 240,
+      "reset_kwargs": {
+        "seed": 3966740401,
+        "model_id": "065-a_cups"
+      }
+    },
+    {
+      "episode_id": 241,
+      "reset_kwargs": {
+        "seed": 1327437104,
+        "model_id": "065-a_cups"
+      }
+    },
+    {
+      "episode_id": 242,
+      "reset_kwargs": {
+        "seed": 1619462811,
+        "model_id": "065-a_cups"
+      }
+    },
+    {
+      "episode_id": 243,
+      "reset_kwargs": {
+        "seed": 686773877,
+        "model_id": "065-a_cups"
+      }
+    },
+    {
+      "episode_id": 244,
+      "reset_kwargs": {
+        "seed": 253536814,
+        "model_id": "065-a_cups"
+      }
+    },
+    {
+      "episode_id": 245,
+      "reset_kwargs": {
+        "seed": 3686297122,
+        "model_id": "065-b_cups"
+      }
+    },
+    {
+      "episode_id": 246,
+      "reset_kwargs": {
+        "seed": 2077916647,
+        "model_id": "065-b_cups"
+      }
+    },
+    {
+      "episode_id": 247,
+      "reset_kwargs": {
+        "seed": 3097828111,
+        "model_id": "065-b_cups"
+      }
+    },
+    {
+      "episode_id": 248,
+      "reset_kwargs": {
+        "seed": 2770344505,
+        "model_id": "065-b_cups"
+      }
+    },
+    {
+      "episode_id": 249,
+      "reset_kwargs": {
+        "seed": 1677012925,
+        "model_id": "065-b_cups"
+      }
+    },
+    {
+      "episode_id": 250,
+      "reset_kwargs": {
+        "seed": 3837182274,
+        "model_id": "065-c_cups"
+      }
+    },
+    {
+      "episode_id": 251,
+      "reset_kwargs": {
+        "seed": 3613931641,
+        "model_id": "065-c_cups"
+      }
+    },
+    {
+      "episode_id": 252,
+      "reset_kwargs": {
+        "seed": 953274112,
+        "model_id": "065-c_cups"
+      }
+    },
+    {
+      "episode_id": 253,
+      "reset_kwargs": {
+        "seed": 1934777974,
+        "model_id": "065-c_cups"
+      }
+    },
+    {
+      "episode_id": 254,
+      "reset_kwargs": {
+        "seed": 894861755,
+        "model_id": "065-c_cups"
+      }
+    },
+    {
+      "episode_id": 255,
+      "reset_kwargs": {
+        "seed": 4255734575,
+        "model_id": "065-d_cups"
+      }
+    },
+    {
+      "episode_id": 256,
+      "reset_kwargs": {
+        "seed": 4226396468,
+        "model_id": "065-d_cups"
+      }
+    },
+    {
+      "episode_id": 257,
+      "reset_kwargs": {
+        "seed": 4111704347,
+        "model_id": "065-d_cups"
+      }
+    },
+    {
+      "episode_id": 258,
+      "reset_kwargs": {
+        "seed": 1334684325,
+        "model_id": "065-d_cups"
+      }
+    },
+    {
+      "episode_id": 259,
+      "reset_kwargs": {
+        "seed": 3413989556,
+        "model_id": "065-d_cups"
+      }
+    },
+    {
+      "episode_id": 260,
+      "reset_kwargs": {
+        "seed": 2121971834,
+        "model_id": "065-e_cups"
+      }
+    },
+    {
+      "episode_id": 261,
+      "reset_kwargs": {
+        "seed": 433231629,
+        "model_id": "065-e_cups"
+      }
+    },
+    {
+      "episode_id": 262,
+      "reset_kwargs": {
+        "seed": 1606763537,
+        "model_id": "065-e_cups"
+      }
+    },
+    {
+      "episode_id": 263,
+      "reset_kwargs": {
+        "seed": 3957965002,
+        "model_id": "065-e_cups"
+      }
+    },
+    {
+      "episode_id": 264,
+      "reset_kwargs": {
+        "seed": 3284632815,
+        "model_id": "065-e_cups"
+      }
+    },
+    {
+      "episode_id": 265,
+      "reset_kwargs": {
+        "seed": 459241843,
+        "model_id": "065-f_cups"
+      }
+    },
+    {
+      "episode_id": 266,
+      "reset_kwargs": {
+        "seed": 3218738769,
+        "model_id": "065-f_cups"
+      }
+    },
+    {
+      "episode_id": 267,
+      "reset_kwargs": {
+        "seed": 1882745742,
+        "model_id": "065-f_cups"
+      }
+    },
+    {
+      "episode_id": 268,
+      "reset_kwargs": {
+        "seed": 366424118,
+        "model_id": "065-f_cups"
+      }
+    },
+    {
+      "episode_id": 269,
+      "reset_kwargs": {
+        "seed": 3130300784,
+        "model_id": "065-f_cups"
+      }
+    },
+    {
+      "episode_id": 270,
+      "reset_kwargs": {
+        "seed": 1009572059,
+        "model_id": "065-g_cups"
+      }
+    },
+    {
+      "episode_id": 271,
+      "reset_kwargs": {
+        "seed": 816229099,
+        "model_id": "065-g_cups"
+      }
+    },
+    {
+      "episode_id": 272,
+      "reset_kwargs": {
+        "seed": 1090687025,
+        "model_id": "065-g_cups"
+      }
+    },
+    {
+      "episode_id": 273,
+      "reset_kwargs": {
+        "seed": 2478711269,
+        "model_id": "065-g_cups"
+      }
+    },
+    {
+      "episode_id": 274,
+      "reset_kwargs": {
+        "seed": 906368150,
+        "model_id": "065-g_cups"
+      }
+    },
+    {
+      "episode_id": 275,
+      "reset_kwargs": {
+        "seed": 465108905,
+        "model_id": "065-h_cups"
+      }
+    },
+    {
+      "episode_id": 276,
+      "reset_kwargs": {
+        "seed": 1996948778,
+        "model_id": "065-h_cups"
+      }
+    },
+    {
+      "episode_id": 277,
+      "reset_kwargs": {
+        "seed": 3822072487,
+        "model_id": "065-h_cups"
+      }
+    },
+    {
+      "episode_id": 278,
+      "reset_kwargs": {
+        "seed": 3133259947,
+        "model_id": "065-h_cups"
+      }
+    },
+    {
+      "episode_id": 279,
+      "reset_kwargs": {
+        "seed": 1165896847,
+        "model_id": "065-h_cups"
+      }
+    },
+    {
+      "episode_id": 280,
+      "reset_kwargs": {
+        "seed": 3671933045,
+        "model_id": "065-i_cups"
+      }
+    },
+    {
+      "episode_id": 281,
+      "reset_kwargs": {
+        "seed": 1124312904,
+        "model_id": "065-i_cups"
+      }
+    },
+    {
+      "episode_id": 282,
+      "reset_kwargs": {
+        "seed": 1022952177,
+        "model_id": "065-i_cups"
+      }
+    },
+    {
+      "episode_id": 283,
+      "reset_kwargs": {
+        "seed": 1560292449,
+        "model_id": "065-i_cups"
+      }
+    },
+    {
+      "episode_id": 284,
+      "reset_kwargs": {
+        "seed": 2119792674,
+        "model_id": "065-i_cups"
+      }
+    },
+    {
+      "episode_id": 285,
+      "reset_kwargs": {
+        "seed": 1757187221,
+        "model_id": "065-j_cups"
+      }
+    },
+    {
+      "episode_id": 286,
+      "reset_kwargs": {
+        "seed": 2670610695,
+        "model_id": "065-j_cups"
+      }
+    },
+    {
+      "episode_id": 287,
+      "reset_kwargs": {
+        "seed": 1834847696,
+        "model_id": "065-j_cups"
+      }
+    },
+    {
+      "episode_id": 288,
+      "reset_kwargs": {
+        "seed": 1973766559,
+        "model_id": "065-j_cups"
+      }
+    },
+    {
+      "episode_id": 289,
+      "reset_kwargs": {
+        "seed": 1211626385,
+        "model_id": "065-j_cups"
+      }
+    },
+    {
+      "episode_id": 290,
+      "reset_kwargs": {
+        "seed": 1014849310,
+        "model_id": "070-a_colored_wood_blocks"
+      }
+    },
+    {
+      "episode_id": 291,
+      "reset_kwargs": {
+        "seed": 1470930340,
+        "model_id": "070-a_colored_wood_blocks"
+      }
+    },
+    {
+      "episode_id": 292,
+      "reset_kwargs": {
+        "seed": 2084079398,
+        "model_id": "070-a_colored_wood_blocks"
+      }
+    },
+    {
+      "episode_id": 293,
+      "reset_kwargs": {
+        "seed": 3458171776,
+        "model_id": "070-a_colored_wood_blocks"
+      }
+    },
+    {
+      "episode_id": 294,
+      "reset_kwargs": {
+        "seed": 2608002744,
+        "model_id": "070-a_colored_wood_blocks"
+      }
+    },
+    {
+      "episode_id": 295,
+      "reset_kwargs": {
+        "seed": 1179327182,
+        "model_id": "070-b_colored_wood_blocks"
+      }
+    },
+    {
+      "episode_id": 296,
+      "reset_kwargs": {
+        "seed": 860285002,
+        "model_id": "070-b_colored_wood_blocks"
+      }
+    },
+    {
+      "episode_id": 297,
+      "reset_kwargs": {
+        "seed": 1818341641,
+        "model_id": "070-b_colored_wood_blocks"
+      }
+    },
+    {
+      "episode_id": 298,
+      "reset_kwargs": {
+        "seed": 1235231266,
+        "model_id": "070-b_colored_wood_blocks"
+      }
+    },
+    {
+      "episode_id": 299,
+      "reset_kwargs": {
+        "seed": 2286697179,
+        "model_id": "070-b_colored_wood_blocks"
+      }
+    },
+    {
+      "episode_id": 300,
+      "reset_kwargs": {
+        "seed": 2046176887,
+        "model_id": "071_nine_hole_peg_test"
+      }
+    },
+    {
+      "episode_id": 301,
+      "reset_kwargs": {
+        "seed": 3387051386,
+        "model_id": "071_nine_hole_peg_test"
+      }
+    },
+    {
+      "episode_id": 302,
+      "reset_kwargs": {
+        "seed": 343813501,
+        "model_id": "071_nine_hole_peg_test"
+      }
+    },
+    {
+      "episode_id": 303,
+      "reset_kwargs": {
+        "seed": 3455246173,
+        "model_id": "071_nine_hole_peg_test"
+      }
+    },
+    {
+      "episode_id": 304,
+      "reset_kwargs": {
+        "seed": 2545727823,
+        "model_id": "071_nine_hole_peg_test"
+      }
+    },
+    {
+      "episode_id": 305,
+      "reset_kwargs": {
+        "seed": 425730293,
+        "model_id": "072-a_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 306,
+      "reset_kwargs": {
+        "seed": 2830550777,
+        "model_id": "072-a_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 307,
+      "reset_kwargs": {
+        "seed": 1380441877,
+        "model_id": "072-a_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 308,
+      "reset_kwargs": {
+        "seed": 4206590205,
+        "model_id": "072-a_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 309,
+      "reset_kwargs": {
+        "seed": 1302093546,
+        "model_id": "072-a_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 310,
+      "reset_kwargs": {
+        "seed": 1613551584,
+        "model_id": "072-b_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 311,
+      "reset_kwargs": {
+        "seed": 4289182881,
+        "model_id": "072-b_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 312,
+      "reset_kwargs": {
+        "seed": 1609508900,
+        "model_id": "072-b_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 313,
+      "reset_kwargs": {
+        "seed": 1062288234,
+        "model_id": "072-b_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 314,
+      "reset_kwargs": {
+        "seed": 199016298,
+        "model_id": "072-b_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 315,
+      "reset_kwargs": {
+        "seed": 483821416,
+        "model_id": "072-c_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 316,
+      "reset_kwargs": {
+        "seed": 391895647,
+        "model_id": "072-c_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 317,
+      "reset_kwargs": {
+        "seed": 194567681,
+        "model_id": "072-c_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 318,
+      "reset_kwargs": {
+        "seed": 1284842863,
+        "model_id": "072-c_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 319,
+      "reset_kwargs": {
+        "seed": 3790823924,
+        "model_id": "072-c_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 320,
+      "reset_kwargs": {
+        "seed": 1717555825,
+        "model_id": "072-d_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 321,
+      "reset_kwargs": {
+        "seed": 1718256701,
+        "model_id": "072-d_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 322,
+      "reset_kwargs": {
+        "seed": 316769982,
+        "model_id": "072-d_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 323,
+      "reset_kwargs": {
+        "seed": 2622401009,
+        "model_id": "072-d_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 324,
+      "reset_kwargs": {
+        "seed": 1315620070,
+        "model_id": "072-d_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 325,
+      "reset_kwargs": {
+        "seed": 3152383506,
+        "model_id": "072-e_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 326,
+      "reset_kwargs": {
+        "seed": 1409449304,
+        "model_id": "072-e_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 327,
+      "reset_kwargs": {
+        "seed": 3946141493,
+        "model_id": "072-e_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 328,
+      "reset_kwargs": {
+        "seed": 3711335742,
+        "model_id": "072-e_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 329,
+      "reset_kwargs": {
+        "seed": 3497396467,
+        "model_id": "072-e_toy_airplane"
+      }
+    },
+    {
+      "episode_id": 330,
+      "reset_kwargs": {
+        "seed": 3758955136,
+        "model_id": "073-a_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 331,
+      "reset_kwargs": {
+        "seed": 2866517098,
+        "model_id": "073-a_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 332,
+      "reset_kwargs": {
+        "seed": 1028373417,
+        "model_id": "073-a_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 333,
+      "reset_kwargs": {
+        "seed": 2561436775,
+        "model_id": "073-a_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 334,
+      "reset_kwargs": {
+        "seed": 3671682933,
+        "model_id": "073-a_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 335,
+      "reset_kwargs": {
+        "seed": 3958785723,
+        "model_id": "073-b_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 336,
+      "reset_kwargs": {
+        "seed": 259503928,
+        "model_id": "073-b_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 337,
+      "reset_kwargs": {
+        "seed": 956137720,
+        "model_id": "073-b_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 338,
+      "reset_kwargs": {
+        "seed": 3884668141,
+        "model_id": "073-b_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 339,
+      "reset_kwargs": {
+        "seed": 2839938124,
+        "model_id": "073-b_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 340,
+      "reset_kwargs": {
+        "seed": 438403331,
+        "model_id": "073-c_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 341,
+      "reset_kwargs": {
+        "seed": 2537475592,
+        "model_id": "073-c_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 342,
+      "reset_kwargs": {
+        "seed": 812435273,
+        "model_id": "073-c_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 343,
+      "reset_kwargs": {
+        "seed": 3932501986,
+        "model_id": "073-c_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 344,
+      "reset_kwargs": {
+        "seed": 7261436,
+        "model_id": "073-c_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 345,
+      "reset_kwargs": {
+        "seed": 3369352154,
+        "model_id": "073-d_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 346,
+      "reset_kwargs": {
+        "seed": 4094399373,
+        "model_id": "073-d_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 347,
+      "reset_kwargs": {
+        "seed": 4056258404,
+        "model_id": "073-d_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 348,
+      "reset_kwargs": {
+        "seed": 3315054969,
+        "model_id": "073-d_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 349,
+      "reset_kwargs": {
+        "seed": 3814819684,
+        "model_id": "073-d_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 350,
+      "reset_kwargs": {
+        "seed": 542475124,
+        "model_id": "073-e_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 351,
+      "reset_kwargs": {
+        "seed": 4120915424,
+        "model_id": "073-e_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 352,
+      "reset_kwargs": {
+        "seed": 2095615429,
+        "model_id": "073-e_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 353,
+      "reset_kwargs": {
+        "seed": 197878594,
+        "model_id": "073-e_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 354,
+      "reset_kwargs": {
+        "seed": 3804843122,
+        "model_id": "073-e_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 355,
+      "reset_kwargs": {
+        "seed": 536792200,
+        "model_id": "073-f_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 356,
+      "reset_kwargs": {
+        "seed": 1850028381,
+        "model_id": "073-f_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 357,
+      "reset_kwargs": {
+        "seed": 560684064,
+        "model_id": "073-f_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 358,
+      "reset_kwargs": {
+        "seed": 1882556739,
+        "model_id": "073-f_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 359,
+      "reset_kwargs": {
+        "seed": 3553225955,
+        "model_id": "073-f_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 360,
+      "reset_kwargs": {
+        "seed": 4113104163,
+        "model_id": "073-g_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 361,
+      "reset_kwargs": {
+        "seed": 2355205889,
+        "model_id": "073-g_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 362,
+      "reset_kwargs": {
+        "seed": 2724233422,
+        "model_id": "073-g_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 363,
+      "reset_kwargs": {
+        "seed": 3722232064,
+        "model_id": "073-g_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 364,
+      "reset_kwargs": {
+        "seed": 1128853497,
+        "model_id": "073-g_lego_duplo"
+      }
+    },
+    {
+      "episode_id": 365,
+      "reset_kwargs": {
+        "seed": 3763911136,
+        "model_id": "077_rubiks_cube"
+      }
+    },
+    {
+      "episode_id": 366,
+      "reset_kwargs": {
+        "seed": 3235757303,
+        "model_id": "077_rubiks_cube"
+      }
+    },
+    {
+      "episode_id": 367,
+      "reset_kwargs": {
+        "seed": 2534441673,
+        "model_id": "077_rubiks_cube"
+      }
+    },
+    {
+      "episode_id": 368,
+      "reset_kwargs": {
+        "seed": 3195942812,
+        "model_id": "077_rubiks_cube"
+      }
+    },
+    {
+      "episode_id": 369,
+      "reset_kwargs": {
+        "seed": 3090925416,
+        "model_id": "077_rubiks_cube"
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Transporter Networks
 
-This repo provides a transporter networks baseline to solve the AssemblingKits task
+This folder provides a transporter networks baseline to solve the AssemblingKits task
 
 ## Getting Started
 
