@@ -37,9 +37,10 @@ To run inference, you can download one of the pretrained models [here](https://d
 ```
 python examples/contactgraspnet/test.py
 ```
-Will first generate some pointcloud data beforehand. Once prompted, generate the contact grasps
+Will first generate some pointcloud data beforehand. Once prompted, generate the contact grasps and save the results to a `results` folder with the following
+
 ```
-python contact_graspnet/inference.py --np_path=test_data/*  --forward_passes=5
+python contact_graspnet/contact_graspnet/inference.py --np_path=test_data/*  --forward_passes=5
 ```
 
 which will store predictions in the `results/` folder. Then press enter to continue running and store results in a `results.pkl` file.

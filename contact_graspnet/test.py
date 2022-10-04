@@ -260,7 +260,7 @@ def solve(
 if __name__ == "__main__":
     main(
         dict(
-            predictions_path="../contact_graspnet/results",
-            episode_cfgs_json=osp.join(osp.dirname(__file__), "PickSingleYCB-v0.train.stage1.json")
+            predictions_path="./results",
+            episode_cfgs_json=osp.join(osp.dirname(__file__), "train_episodes.json")
         )
     )
