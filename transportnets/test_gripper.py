@@ -138,13 +138,13 @@ class AssemblingKitsSolver(MPSolver):
 
         goal_pos = goal_p 
         goal_pos[2] = 0.03
-        obj_goal_pose = sapien.Pose(goal_pos, [1, 0,0, 0])
+        obj_goal_pose = sapien.Pose(goal_pos, [1,0,0,0])
         initial_tcp_q = self.env.tcp.pose.q
         goal_tcp_euler_xyz = utils.quatXYZW_to_eulerXYZ([initial_tcp_q[1], initial_tcp_q[2], initial_tcp_q[3], initial_tcp_q[0]])
         goal_tcp_q = utils.eulerXYZ_to_quatXYZW([goal_tcp_euler_xyz[0], goal_tcp_euler_xyz[1], goal_tcp_euler_xyz[2] -rot_angle[2]])
         goal_tcp_q = [goal_tcp_q[3], goal_tcp_q[0], goal_tcp_q[1], goal_tcp_q[2]]
         
-        tcp_goal_pose = obj_goal_pose * self.env.obj.pose.inv() * self.env.tcp.pose
+        tcp_goal_pose = obj_goal_pose * self.env.tcp.pose * self.env.tcp.pose
         tcp_goal_pose.set_q(goal_tcp_q)
         
         plan = self.plan_screw(tcp_goal_pose)

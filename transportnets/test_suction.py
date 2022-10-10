@@ -68,30 +68,25 @@ class AssemblingKitsSolver(MPSolver):
 
         act = self.agent.act(self.format_obs(obs), None, None)
         rot_angle = utils.quatXYZW_to_eulerXYZ(act['pose1'][1])
-
-        # obj_z = self.env.obj.pose.p[2]
-        obj_q = self.env.obj.pose.q
-        obj_angle = utils.quatXYZW_to_eulerXYZ(
-            [obj_q[1], obj_q[2], obj_q[3], obj_q[0]])[2]
-        # normally we would rotate rot_angle[2] amount by setting a goal rotation on the gripper, but we just set the goal rotation of the object for simplicity
-        obj_angle = obj_angle + rot_angle[2]
-        obj_q = utils.eulerXYZ_to_quatXYZW([0, 0, obj_angle])
         goal_p = [*act["pose1"][0][:2], 0]
-
-        goal_q = [obj_q[3], obj_q[0], obj_q[1], obj_q[2]]
-
-        # Ground truths:
-        # goal_p = [*self.env.objects_pos[self.env.object_id][:2], obj_z]
-        # goal_q = euler2quat(*np.array([0, 0, self.env.objects_rot[self.env.object_id]]))
-        # print(f"Goal diff: {np.linalg.norm(goal_p[:2] - self.env.objects_pos[self.env.object_id][:2])}")
-
-        self.add_collision(self.env.kit, "kit")
-        self.add_collision(self.env.obj, "obj")
 
         # Compute grasp pose
         approaching = (0, 0, -1)
         target_closing = self.env.tcp.pose.to_transformation_matrix()[:3, 1]
-        obb = self.get_actor_obb(self.env.obj)
+        # obb = self.get_actor_obb(self.env.obj)
+        self.env.env._obs_mode = 'pointcloud'
+        obs = self.env.get_obs()
+        self.env.env._obs_mode = 'none'
+        import trimesh
+        pcd = obs['pointcloud']['xyzw']
+        pcd = pcd[pcd[:, -1] == 1]
+        pcd = pcd[(pcd[:, 2] < 0.1) & (pcd[:, 2] > 0.027)]
+        pcd = pcd[(pcd[:, 1] < 0.3) & (pcd[:, 1] > -0.3)]
+        pcd = pcd[(pcd[:, 0] < 0.2) & (pcd[:, 0] > -0.15)]
+        pcd = trimesh.PointCloud(pcd[:, :3])
+        
+        # pcd.show()
+        obb = pcd.bounding_box_oriented
         grasp_info = self.compute_grasp_info_by_obb(
             obb, approaching, target_closing, depth=self.FINGER_LENGTH
         )
@@ -122,7 +117,7 @@ class AssemblingKitsSolver(MPSolver):
         self.render_wait()
 
         # Grasp
-        self.disable_collision("obj")
+        # self.disable_collision("obj")
         plan = self.plan_screw(grasp_pose)
         self.execute_plan(plan, self.CLOSE_GRIPPER_POS)
         self.render_wait()
@@ -135,11 +130,17 @@ class AssemblingKitsSolver(MPSolver):
         self.render_wait()
 
         # Move to goal pose
-        goal_pos = goal_p
-        goal_pos[2] = 0.04
-        obj_goal_pose = sapien.Pose(goal_pos, goal_q)
+        goal_pos = goal_p 
+        goal_pos[2] = 0.03
+        obj_goal_pose = sapien.Pose(goal_pos, [1,0,0,0])
+        initial_tcp_q = self.env.tcp.pose.q
+        goal_tcp_euler_xyz = utils.quatXYZW_to_eulerXYZ([initial_tcp_q[1], initial_tcp_q[2], initial_tcp_q[3], initial_tcp_q[0]])
+        goal_tcp_q = utils.eulerXYZ_to_quatXYZW([goal_tcp_euler_xyz[0], goal_tcp_euler_xyz[1], goal_tcp_euler_xyz[2] -rot_angle[2]])
+        goal_tcp_q = [goal_tcp_q[3], goal_tcp_q[0], goal_tcp_q[1], goal_tcp_q[2]]
+        
+        tcp_goal_pose = obj_goal_pose * self.env.tcp.pose * self.env.tcp.pose
+        tcp_goal_pose.set_q(goal_tcp_q)
 
-        tcp_goal_pose = obj_goal_pose * self.env.obj.pose.inv() * self.env.tcp.pose
         plan = self.plan_screw(tcp_goal_pose)
         if plan["status"] == "plan_failure":
             lowest_plan_step = np.inf
@@ -152,10 +153,10 @@ class AssemblingKitsSolver(MPSolver):
                         plan = tentative_plan
         self.execute_plan(plan, self.CLOSE_GRIPPER_POS)
         self.render_wait()
-
-        goal_pos[2] = 0.02
-        obj_goal_pose = sapien.Pose(goal_pos, goal_q)
-        tcp_goal_pose = obj_goal_pose * self.env.obj.pose.inv() * self.env.tcp.pose
+        # lower suction gripper down in same pose
+        tcp_goal_pose_p = tcp_goal_pose.p
+        tcp_goal_pose_p[2] = 0.02
+        tcp_goal_pose.set_p(tcp_goal_pose_p)
         plan = self.plan_screw(tcp_goal_pose)
         self.execute_plan(plan, self.CLOSE_GRIPPER_POS)
         self.render_wait()
