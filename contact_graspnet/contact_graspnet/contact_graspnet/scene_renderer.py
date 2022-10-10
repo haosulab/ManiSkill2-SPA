@@ -8,7 +8,11 @@ import math
 import os
 from copy import deepcopy
 import multiprocessing as mp
-import pyrender
+try:
+    import pyrender
+except:
+    print("failed to import pyrender, skipping")
+    pass
 import trimesh
 import trimesh.transformations as tra
 

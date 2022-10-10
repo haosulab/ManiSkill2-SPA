@@ -17,7 +17,7 @@ import config_utils
 from data import regularize_pc_point_count, depth2pc, load_available_input_data
 
 from contact_grasp_estimator import GraspEstimator
-from visualization_utils import visualize_grasps, show_image
+# from visualization_utils import visualize_grasps, show_image
 
 def inference(global_config, checkpoint_dir, input_paths, K=None, local_regions=True, skip_border_objects=False, filter_grasps=True, segmap_id=None, z_range=[0.2,1.8], forward_passes=1):
     """
