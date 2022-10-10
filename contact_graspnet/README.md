@@ -33,15 +33,23 @@ pip install tensorflow==2.5 tensorflow-gpu==2.5
 sh compile_pointnet_tfops.sh
 ```
 
+
+Then install pymp, a suite of motion planning tools.
+```
+conda install pinocchio -c defaults -c conda-forge
+pip install --upgrade git+https://github.com/Jiayuan-Gu/pymp.git
+```
+
+If there is a bug about missing loaders, run
 ```
 pip install pyyaml==5.4.1
 ```
-
+<!-- 
 If mlab visualization fails, you may need this:
 ```
 export ETS_TOOLKIT=qt4
 export QT_API=pyqt5
-```
+``` -->
 
 ## Models
 
@@ -50,6 +58,9 @@ To run inference, you can download one of the pretrained models [here](https://d
 
 
 ## Test
+
+To run a test...
+
 ```
 python test.py
 ```
