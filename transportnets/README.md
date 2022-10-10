@@ -20,7 +20,7 @@ You can upgrade tensorflow to 2.10.0 if 2.3.0 does not work
 ```
 conda install -c conda-forge cudatoolkit=11.2 cudnn=8.1.0
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/ # might be necessary to get code to run
-python3 -m pip install tensorflow
+python3 -m pip install --upgrade tensorflow
 ```
 
 Then install pymp, a suite of motion planning tools.
