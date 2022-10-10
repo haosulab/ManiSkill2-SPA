@@ -193,7 +193,7 @@ def main(args):
         episode_cfgs = json.load(f)["episodes"]
 
     results = []
-    for episode_cfg in tqdm(episode_cfgs[:]):
+    for episode_cfg in tqdm(episode_cfgs):
         reset_kwargs = episode_cfg["reset_kwargs"]
         r = solver.solve(**reset_kwargs)
         if args.verbose > 0:
@@ -249,7 +249,7 @@ def parse_args():
     if args.output_name is None:
         args.output_name = f"results_suction_{args.json_name}.pkl"
     print(
-        f"Evaluating Suction Gripper with Transporter Networks on AssemblingKits. Results will be saved to {args.output_name}")
+        f"Evaluating Two Finger Gripper with Transporter Networks on AssemblingKits. Results will be saved to {args.output_name}")
     print(
         f"Loading checkpoint {args.n_steps} of model saved at {full_model_path}")
     return args

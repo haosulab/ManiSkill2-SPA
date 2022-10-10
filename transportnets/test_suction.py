@@ -187,7 +187,7 @@ def main(args):
         episode_cfgs = json.load(f)["episodes"]
 
     results = []
-    for episode_cfg in tqdm(episode_cfgs[:5]):
+    for episode_cfg in tqdm(episode_cfgs):
         reset_kwargs = episode_cfg["reset_kwargs"]
         r = solver.solve(**reset_kwargs)
         if args.verbose > 0:
@@ -219,6 +219,8 @@ def parse_args():
                         action="store_true", help="Render the solution")
     parser.add_argument("--n-steps", default=10000,
                         type=int, help="Model checkpoint to use")
+    parser.add_argument("-v", "--verbose", default=0,
+                        type=int, help="Verbosity. 1 = verbose, 0 = none")
     parser.add_argument("--model", required=True,
                         help="Name of the model to use. Loaded checkpoint path will be <root_dir>/checkpoints/<model>. Note root_dir is also an argument to this script")
     parser.add_argument("--json-name", required=True, type=str,
@@ -251,5 +253,3 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     main(args)
-    # "AssemblingKits-v0.test.stage1.json"
-    # python test_suction.py     --model="assembly144-transporter-1000-0" --n-steps=10000 --json-name="AssemblingKits-v0.test.stage1.json"
