@@ -34,15 +34,20 @@ After installing everything, make sure to `cd` into this folder.
 ### Evaluation
 
 We have a pretrained model on google drive, download it here [TODO]
-
+<!-- 
 To then test the model, run
 ```
 python test_gripper.py \
     --model="assembly144-transporter-1000-0" --n-steps=100000 --n-rotations=144 --json-name="train_episodes.json"
 ```
 
-You can also use `test_suction.py` to test with the suction gripper instead of a two-finger gripper. The pretrained models should get around 15-20% success rate of slotting in the piece into the assembly kit.
+You can also use `test_suction.py` to test with the suction gripper instead of a two-finger gripper. The pretrained models should get around 15-20% success rate of slotting in the piece into the assembly kit. -->
 
+To evaluate the model run
+
+```
+python -m mani_skill2.evaluation.run_evaluation -e "AssemblingKits-v0" -o out --cfg train_episodes.json
+```
 
 ### Training 
 
