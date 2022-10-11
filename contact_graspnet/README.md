@@ -21,7 +21,7 @@ python setup.py develop
 First `cd` into the `contact_graspnet` folder, then run
 
 ```
-conda env update -f contact_graspnet_env.yml
+conda env update -n ms2cgn --file contact_graspnet_env.yml
 ```
 
 You can also upgrade Tensorflow and recompile ops as follows if using a RTX 30xx

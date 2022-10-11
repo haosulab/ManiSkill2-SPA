@@ -6,7 +6,7 @@ This folder provides a transporter networks baseline to solve the AssemblingKits
 
 ### Installation
 
-First create a new maniskill2 conda environment if you have not already.
+First create a new ManiSkill2 conda environment if you have not already by going into the ManiSkill2 repo and running
 ```
 conda env create -n ms2tpn -f environment.yml
 conda activate ms2tpn
@@ -39,7 +39,7 @@ After installing everything, make sure to `cd` into this folder.
 
 ### Evaluation
 
-We have a pretrained model on google drive, download it here [TODO]
+We have a pretrained model on google drive, download it here https://drive.google.com/file/d/1QoelH5swqgUUPOT7IQePcL14dWRHazrB/view?usp=sharing
 <!-- 
 To then test the model, run
 ```
