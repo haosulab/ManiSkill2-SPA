@@ -6,27 +6,25 @@ This folder provides a transporter networks baseline to solve the AssemblingKits
 
 ### Installation
 
-First create a new ManiSkill2 conda environment if you have not already by going into the ManiSkill2 repo and running
+First create a new conda environment and install mani-skill2 and TransporterNetworks 
 ```
-conda env create -n ms2tpn -f environment.yml
+conda create -n ms2tpn python==3.8
 conda activate ms2tpn
-python setup.py develop
-```
+pip install mani-skill2
 
-Then install the transporter networks baseline
-```
+# clone transporternetworks (called ravens) and install it
 git clone https://github.com/google-research/ravens.git
 cd ravens
 pip install -r requirements.txt
 python setup.py install --user
 ```
 
-You can upgrade tensorflow to 2.10.0 if 2.3.0 does not work
+For some systems you may need a specific version of cudatoolkit, cudnn, and tensorflow.
 ```
 pip install --upgrade numpy
 conda install -c conda-forge cudatoolkit=11.2 cudnn=8.1.0
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/ # might be necessary to get code to run
-python3 -m pip install --upgrade tensorflow
+python3 -m pip install --upgrade tensorflow # You can upgrade tensorflow to 2.10.0 if 2.3.0 does not work
 ```
 
 Then install pymp, a suite of motion planning tools.

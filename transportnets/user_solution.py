@@ -52,8 +52,8 @@ class UserPolicy(BasePolicy):
             data = obs['image'][cam_name]
             colors.append(data['rgb'])
             depths.append(data['depth'][:,:,0])
-            extrinsics.append(data['camera_extrinsic'])
-            intrinsics.append(data['camera_intrinsic'])
+            extrinsics.append(obs['camera_param'][cam_name]['extrinsic_cv'])
+            intrinsics.append(obs['camera_param'][cam_name]['intrinsic_cv'])
         agent_obs = dict(
             color=colors,
             depth=depths,
@@ -103,8 +103,8 @@ class UserPolicy(BasePolicy):
                 cam_data = observations["image"][k]
                 # import ipdb;ipdb.set_trace()
                 depth = cam_data["depth"][:, :, 0]
-                intrinsic = cam_data["camera_intrinsic"]
-                extrinsic = cam_data["camera_extrinsic"]
+                intrinsic = observations['camera_param'][k]["intrinsic_cv"]
+                extrinsic = observations['camera_param'][k]["extrinsic_cv"]
                 xyz = utils.get_pointcloud(depth, intrinsic)
                 xyz=xyz.reshape(-1,3)
                 xyz=transform_camera_to_world(xyz, extrinsic)

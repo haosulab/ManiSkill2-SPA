@@ -3,12 +3,11 @@ import numpy as np
 import pymp
 import sapien.core as sapien
 import trimesh
-from mani_skill2 import DESCRIPTION_DIR
+from mani_skill2 import ASSET_DIR, PACKAGE_ASSET_DIR
 from mani_skill2.utils.common import normalize_vector
-from mani_skill2.utils.sapien_utils import get_actor_by_name
+from mani_skill2.utils.sapien_utils import get_entity_by_name
 from mani_skill2.utils.trimesh_utils import get_actor_mesh
 from mani_skill2.utils.wrappers import RecordEpisode
-
 
 class MPSolver:
     OPEN_GRIPPER_POS = -1
@@ -53,7 +52,7 @@ class MPSolver:
         self.joint_vel_limits = joint_vel_limits
         self.joint_acc_limits = joint_acc_limits
         self.urdf_path = str(self.env.agent.urdf_path).format(
-            description=DESCRIPTION_DIR
+            PACKAGE_ASSET_DIR=PACKAGE_ASSET_DIR
         )
         self.srdf_path = self.urdf_path.replace("urdf", "srdf")
         self.joint_names = [
@@ -91,7 +90,7 @@ class MPSolver:
         )
 
     def add_collision_by_name(self, actor_name: str):
-        self.add_collision(get_actor_by_name(actor_name), name=actor_name)
+        self.add_collision(get_entity_by_name(actor_name), name=actor_name)
 
     def disable_collision(self, name: str):
         self.planner.scene.disableCollision(name)

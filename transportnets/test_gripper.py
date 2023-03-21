@@ -11,6 +11,7 @@ import tensorflow as tf
 from transporter import OriginalTransporterAgent
 import transforms3d
 from ravens.utils import utils
+import mani_skill2.envs
 
 class AssemblingKitsSolver(MPSolver):
     def __init__(self, model_name="assembly144-transporter-1000-0", model_n_step=10000, root_dir=".", n_rotations=144, debug=False, vis=False, **kwargs):
@@ -49,8 +50,8 @@ class AssemblingKitsSolver(MPSolver):
             data = obs['image'][cam_name]
             colors.append(data['rgb'])
             depths.append(data['depth'][:,:,0])
-            extrinsics.append(data['camera_extrinsic'])
-            intrinsics.append(data['camera_intrinsic'])
+            extrinsics.append(obs['camera_param'][cam_name]['extrinsic_cv'])
+            intrinsics.append(obs['camera_param'][cam_name]['intrinsic_cv'])
         agent_obs = dict(
             color=colors,
             depth=depths,
