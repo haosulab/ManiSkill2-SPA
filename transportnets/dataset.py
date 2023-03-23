@@ -69,39 +69,57 @@ class DatasetManiskill:
         """
         # import ipdb;ipdb.set_trace()
         episode_id = f"traj_{episode_id}"
-        poses_p = np.array(self.data[episode_id]["dict_str_p"])
-        poses_q = np.array(self.data[episode_id]["dict_str_q"])
+        episode = self.data[episode_id]
+        # import ipdb;ipdb.set_trace()
 
-        # convert q in format wxyz to xyzw for this codebase
-        def convert_q(q):
-            return np.array([q[1], q[2], q[3], q[0]])
-
-        action = dict(
-            pose0=(poses_p[0], convert_q(poses_q[0])),
-            pose1=(poses_p[1], convert_q(poses_q[1])),
+        colors = np.array(episode['rgbs'])
+        depths = np.array(episode['depths'])[:, :, :, 0]
+        extrinsics = np.array(episode['cam_exts'])
+        intrinsics = np.array(episode['cam_ints'])
+        obs = dict(
+            color=colors,
+            depth=depths,
+            extrinsics=extrinsics,
+            intrinsics=intrinsics
         )
-        seed = int((episode_id).split("_")[1])
-        # obs = {'color': color[i], 'depth': depth[i]} if images else {}
-        episode = []
-        eps_colors = self.data[episode_id]["dict_str_obs"]["dict_str_rgb"]
-        eps_depths = self.data[episode_id]["dict_str_obs"]["dict_str_depth"]
-        for T in range(len(eps_colors)):
-            colors = eps_colors[T].transpose(1, 2, 0)
-            depths = eps_depths[T].transpose(1, 2, 0)
-            # colors.shape, depths.shape
-            obs = dict(
-                color=(colors[:, :, :3], colors[:, :, 3:]),
-                depth=(depths[:, :, 0], depths[:, :, 1]),
-                extrinsics=self.data[episode_id]["dict_str_obs"][
-                    "dict_str_cam_extrinsics"
-                ][T],
-                intrinsics=self.data[episode_id]["dict_str_obs"][
-                    "dict_str_cam_intrinsics"
-                ][T],
-            )
-            episode.append((obs, action, 0, {}))
+        action = dict(
+            pose0=(episode['action']['p'][0], episode['action']['q'][0]),
+            pose1=(episode['action']['p'][1], episode['action']['q'][1])
+        )
+
+        # poses_p = np.array(self.data[episode_id]["dict_str_p"])
+        # poses_q = np.array(self.data[episode_id]["dict_str_q"])
+
+        # # convert q in format wxyz to xyzw for this codebase
+        # def convert_q(q):
+        #     return np.array([q[1], q[2], q[3], q[0]])
+
+        # action = dict(
+        #     pose0=(poses_p[0], convert_q(poses_q[0])),
+        #     pose1=(poses_p[1], convert_q(poses_q[1])),
+        # )
+        # seed = int((episode_id).split("_")[1])
+        # # obs = {'color': color[i], 'depth': depth[i]} if images else {}
+        # episode = []
+        # eps_colors = self.data[episode_id]["dict_str_obs"]["dict_str_rgb"]
+        # eps_depths = self.data[episode_id]["dict_str_obs"]["dict_str_depth"]
+        # for T in range(len(eps_colors)):
+        #     colors = eps_colors[T].transpose(1, 2, 0)
+        #     depths = eps_depths[T].transpose(1, 2, 0)
+        #     # colors.shape, depths.shape
+        #     obs = dict(
+        #         color=(colors[:, :, :3], colors[:, :, 3:]),
+        #         depth=(depths[:, :, 0], depths[:, :, 1]),
+        #         extrinsics=self.data[episode_id]["dict_str_obs"][
+        #             "dict_str_cam_extrinsics"
+        #         ][T],
+        #         intrinsics=self.data[episode_id]["dict_str_obs"][
+        #             "dict_str_cam_intrinsics"
+        #         ][T],
+        #     )
+            # episode.append((obs, action, 0, {}))
             # TODO - this action is only for specific case for assembling kit where there is only ever one action
-        return episode, seed
+        return [(obs, action, 0, {})], episode_id
 
     # def load_field(episode_id, field, fname):
 
@@ -161,6 +179,7 @@ class DatasetManiskill:
         episode, _ = self.load(episode_id, images, cache)
 
         # Return random observation action pair (and goal) from episode.
-        i = np.random.choice(range(len(episode) - 1))
-        sample, goal = episode[i], episode[-1]
-        return sample, goal
+        # import ipdb;ipdb.set_trace()
+        # i = np.random.choice(range(len(episode) - 1))
+        # sample, goal = episode[i], episode[-1]
+        return episode[0], episode[0]

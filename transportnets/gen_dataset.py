@@ -204,7 +204,6 @@ if __name__ == "__main__":
         args_iter[i % N].keys.append(keys[i])
 
     with Pool(N) as p:
-        # files = list(tqdm.tqdm(p.imap(main, args_iter), total=30))
         files = list(p.imap(main, args_iter))
     merge_h5(args.output_name, files)
     for file in files:

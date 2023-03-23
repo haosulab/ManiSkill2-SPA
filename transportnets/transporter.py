@@ -114,7 +114,9 @@ class TransporterAgent:
         # Data augmentation.
         if augment:
             img, _, (p0, p1), _ = utils.perturb(img, [p0, p1])
-        # np.save("sample",(img, p0, p0_theta, p1, p1_theta, act))
+        # import matplotlib.pyplot as plt
+        # plt.imshow(img[:,:,:3]/255)
+        np.save("sample",(img, p0, p0_theta, p1, p1_theta, act))
         return img, p0, p0_theta, p1, p1_theta, act
 
     def train(self, dataset, writer=None):
@@ -129,6 +131,7 @@ class TransporterAgent:
         # p1 theta is actually a theta detla value
         # Get training losses.
         step = self.total_steps + 1
+        # import ipdb;ipdb.set_trace()
         loss0 = self.attention.train(img, p0, p0_theta)
         if isinstance(self.transport, Attention):
             loss1 = self.transport.train(img, p1, p1_theta)

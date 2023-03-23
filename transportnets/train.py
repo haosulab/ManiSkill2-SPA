@@ -30,8 +30,8 @@ from ravens.dataset import Dataset
 from transporter import OriginalTransporterAgent
 
 flags.DEFINE_string("train_dir", ".", "")
-flags.DEFINE_string("train_data", "train_1000.h5", "")
-flags.DEFINE_string("test_data", "test_600.h5", "")
+flags.DEFINE_string("train_data", "data/train_1000.h5", "")
+flags.DEFINE_string("test_data", "data/test_600.h5", "")
 flags.DEFINE_string("task", "assembly", "")
 flags.DEFINE_string("agent", "transporter", "")
 flags.DEFINE_float("hz", 240, "")
@@ -64,7 +64,7 @@ def main(unused_argv):
     # Load train and test datasets.
     train_dataset = DatasetManiskill(FLAGS.train_data)
     test_dataset = DatasetManiskill(FLAGS.test_data)
-
+    
     # Run training from scratch multiple times.
     for train_run in range(FLAGS.n_runs):
         name = f"{FLAGS.task}-{FLAGS.agent}-{FLAGS.n_demos}-{train_run}"
@@ -87,6 +87,7 @@ def main(unused_argv):
 
         # Limit random sampling during training to a fixed dataset.
         max_demos = train_dataset.n_episodes
+        # shuffle the episodes and pick max_demos # of them for training
         episodes = np.random.choice(range(max_demos), FLAGS.n_demos, False)
         train_dataset.set(episodes)
 

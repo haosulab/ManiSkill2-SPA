@@ -86,7 +86,37 @@ python gen_dataset.py --num-procs 8 \
 To run the training code, simply run the following
 
 ```
-python train.py --task=assembly144 --agent=transporter --n_demos=1000 --n_rotations=144 
+python train.py --task=assembly --agent=transporter --n_demos=1000 --n_rotations=144 
 ```
 
 which will save models to `checkpoints/assembly144-transporter-1000-0`.
+
+
+
+
+
+
+
+
+
+
+
+
+```
+conda create --name ms2tpnfix python=3.7
+conda activate ms2tpnfix
+
+git clone https://github.com/google-research/ravens.git
+cd ravens
+pip install -r requirements.txt
+python setup.py install --user
+
+
+conda install -c conda-forge cudatoolkit=11.2.2 cudnn=8.1.0
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
+pip install --upgrade pip
+pip install tensorflow==2.11.*
+pip install tensorflow-addons==0.19.0
+
+pip install mani-skill2
+```
