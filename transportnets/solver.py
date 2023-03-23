@@ -9,6 +9,7 @@ from mani_skill2.utils.sapien_utils import get_entity_by_name
 from mani_skill2.utils.trimesh_utils import get_actor_mesh
 from mani_skill2.utils.wrappers import RecordEpisode
 
+
 class MPSolver:
     OPEN_GRIPPER_POS = -1
     CLOSE_GRIPPER_POS = 1
@@ -161,7 +162,9 @@ class MPSolver:
             try:
                 _, _, done, info = self.env.step(action)
             except:
-                import ipdb;ipdb.set_trace()
+                import ipdb
+
+                ipdb.set_trace()
             self.done = done
             self.info = info
             if self.vis:
