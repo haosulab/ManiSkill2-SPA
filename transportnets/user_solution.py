@@ -48,6 +48,7 @@ class UserPolicy(BasePolicy):
         depths=[]
         extrinsics=[]
         intrinsics=[]
+        # import ipdb;ipdb.set_trace()
         for cam_name in obs['image']:
             data = obs['image'][cam_name]
             colors.append(data['rgb'])

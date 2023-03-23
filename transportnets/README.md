@@ -59,11 +59,22 @@ As our AssemblingKits environment looks different to the ravens environment and 
 
 
 #### Generate data
-To generate the dataset, first download the demonstrations for AssemblingKits from [Maniskill2](https://github.com/haosulab/Maniskill2). These demonstrations are simply used to generate the initial RGBD images of the assembly kit and the initial and goal poses.
+To generate the dataset, first download the demonstrations for AssemblingKits from [Maniskill2](https://github.com/haosulab/Maniskill2). You can run this CLI tool to do so:
+```
+python -m mani_skill2.utils.download_demo AssemblingKits-v0 -o demos
+```
+
+These demonstrations are simply used to generate the initial RGBD images of the assembly kit and the initial and goal poses.
 
 Once the demos are saved to a local `demos` folder, run the following to generate a training and test dataset
 
 ```
+python gen_dataset.py --num-procs 10 \
+    --traj-name demos/rigid_body/AssemblingKits-v0/trajectory.h5 \
+    --json-name demos/rigid_body/AssemblingKits-v0/trajectory.json \
+    --output-name train_1000.h5 \
+    --max-num-traj 1000
+
 python create_dataset.py --env-name AssemblingKits-v0 --num-procs 10 \
     --traj-name demos/AssemblingKits-v0/trajectory.h5 \
     --json-name demos/AssemblingKits-v0/trajectory.json \

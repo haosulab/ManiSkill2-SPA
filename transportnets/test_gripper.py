@@ -63,10 +63,10 @@ class AssemblingKitsSolver(MPSolver):
     def solve(self, **kwargs) -> dict:
         super().solve(**kwargs)
         # import ipdb;ipdb.set_trace()
-        self.env.env._obs_mode = 'rgbd'
+        # self.env.env._obs_mode = 'rgbd'
         obs = self.env.get_obs()
         # import ipdb;ipdb.set_trace()
-        self.env.env._obs_mode = 'none'
+        # self.env.env._obs_mode = 'none'
         
         act = self.agent.act(self.format_obs(obs), None, None)
         rot_angle = utils.quatXYZW_to_eulerXYZ(act['pose1'][1])

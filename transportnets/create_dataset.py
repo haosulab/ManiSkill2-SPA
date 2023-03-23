@@ -18,6 +18,7 @@ os.environ["OMP_NUM_THREADS"] = "1"
 from maniskill2_learn.env import make_gym_env, ReplayMemory, import_env
 from maniskill2_learn.utils.data import DictArray, GDict, f64_to_f32
 from maniskill2_learn.utils.file import merge_h5_trajectory
+from mani_skill2.trajectory.merge_trajectory import merge_h5
 from maniskill2_learn.utils.meta import get_total_memory, flush_print
 from maniskill2_learn.utils.math import split_num
 
@@ -254,7 +255,7 @@ def main():
     from shutil import rmtree
 
     rmtree(args.output_name, ignore_errors=True)
-    merge_h5_trajectory(files, args.output_name)
+    merge_h5(files, args.output_name)
     for file in files:
         rmtree(file, ignore_errors=True)
     print(f"Finish merging files to {args.output_name}")
