@@ -47,17 +47,9 @@ def merge_h5(output_path: str, traj_paths, recompute_id=True):
 
 def main(args):
     env_name = "AssemblingKits-v0"
-    input_dict = {
-        # "env_name": env_name,
-        # "unwrapped": True,
-        "obs_mode": "rgbd",
-        # "obs_frame": args.obs_frame,
-        # "reward_mode": args.reward_mode,
-        # "control_mode": args.control_mode,
-        # "n_points": args.n_points,
-        # "n_goal_points": args.n_goal_points,
-    }
-    env = gym.make(env_name, **input_dict)
+
+    env = gym.make(env_name, obs_mode='rgbd')
+    keys = args.keys
     worker_id = args.worker
     output_file = osp.join("/tmp", f"{worker_id}.h5")
     output_h5 = h5py.File(output_file, "w")
@@ -71,7 +63,6 @@ def main(args):
         r_kwargs = d["reset_kwargs"]
         reset_kwargs[episode_id] = r_kwargs
 
-    keys = sorted(input_h5.keys())
     cnt = 0
     pbar = tqdm.tqdm(position=worker_id, total=len(keys), desc=f"Worker_{worker_id}")
     for j, key in enumerate(keys):
@@ -194,16 +185,14 @@ if __name__ == "__main__":
         keys = keys[:test_set_size]
     else:
         keys = keys[test_set_size:]
-    keys = keys[: args.max_num_traj]
-
+    keys = keys[:args.max_num_traj]
     print(
-        f"Found {len(keys)} trajectories. Test Split: {args.test_split}. Dataset Size: {len(keys)}"
+        f"Test Split: {args.test_split}. Dataset Size: {len(keys)}"
     )
 
     # generate arguments
     args_iter = []
     N = args.num_procs
-    N = 3
     batch_size = len(keys) // N
     for i in range(N):
         a = copy.deepcopy(args)
@@ -213,6 +202,7 @@ if __name__ == "__main__":
     # distribute the remaining keys
     for i in range(N * batch_size, len(keys)):
         args_iter[i % N].keys.append(keys[i])
+
     with Pool(N) as p:
         # files = list(tqdm.tqdm(p.imap(main, args_iter), total=30))
         files = list(p.imap(main, args_iter))

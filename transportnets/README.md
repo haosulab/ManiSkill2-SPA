@@ -69,25 +69,16 @@ These demonstrations are simply used to generate the initial RGBD images of the 
 Once the demos are saved to a local `demos` folder, run the following to generate a training and test dataset
 
 ```
-python gen_dataset.py --num-procs 10 \
+python gen_dataset.py --num-procs 8 \
     --traj-name demos/rigid_body/AssemblingKits-v0/trajectory.h5 \
     --json-name demos/rigid_body/AssemblingKits-v0/trajectory.json \
-    --output-name train_1000.h5 \
+    --output-name data/train_1000.h5 \
     --max-num-traj 1000
-
-python create_dataset.py --env-name AssemblingKits-v0 --num-procs 10 \
-    --traj-name demos/AssemblingKits-v0/trajectory.h5 \
-    --json-name demos/AssemblingKits-v0/trajectory.json \
-    --output-name train_1000.h5 \
-    --control-mode pd_joint_delta_pos --max-num-traj 1000 --obs-mode rgbd \
-    --n-points 1200 --obs-frame base --reward-mode dense --render
-
-python create_dataset.py --env-name AssemblingKits-v0 --num-procs 10 \
-    --traj-name demos/AssemblingKits-v0/trajectory.h5 \
-    --json-name demos/AssemblingKits-v0/trajectory.json \
-    --output-name test_600.h5 \
-    --control-mode pd_joint_delta_pos --max-num-traj 600 --obs-mode rgbd \
-    --n-points 1200 --obs-frame base --reward-mode dense --render --test-split
+python gen_dataset.py --num-procs 8 \
+    --traj-name demos/rigid_body/AssemblingKits-v0/trajectory.h5 \
+    --json-name demos/rigid_body/AssemblingKits-v0/trajectory.json \
+    --output-name data/test_600.h5 \
+    --max-num-traj 600 --test-split
 ```
 
 #### Run training
