@@ -2,7 +2,7 @@ import numpy as np
 import sapien.core as sapien
 from gym import spaces
 from mani_skill2.evaluation.solution import BasePolicy
-
+from utils.vision import perform_initial_scan
 from ravens.utils import utils
 from solver import MPSolver
 from transporter import OriginalTransporterAgent
@@ -39,29 +39,35 @@ class UserPolicy(BasePolicy):
         self.next_plan_stage = None
         self.plan_stage = "init"
         self.plan = None
+        self.env_step = 0
         self.plan_step = 0
         self.planned_grip = self.OPEN_GRIPPER_POS
+
+        self.scanned_observtions = []
 
     def reset(self, observations):
         self.next_plan_stage = None
         self.plan_stage = "init"
         self.plan = None
+        self.env_step = 0
         self.plan_step = 0
         self.planned_grip = self.OPEN_GRIPPER_POS
         self.solver.reset_planner()
+        self.scanned_observtions = []
 
-    def format_obs(self, obs):
+    def format_obs(self, observations):
         colors = []
         depths = []
         extrinsics = []
         intrinsics = []
-        # import ipdb;ipdb.set_trace()
-        for cam_name in obs["image"]:
-            data = obs["image"][cam_name]
-            colors.append(data["rgb"])
-            depths.append(data["depth"][:, :, 0])
-            extrinsics.append(obs["camera_param"][cam_name]["extrinsic_cv"])
-            intrinsics.append(obs["camera_param"][cam_name]["intrinsic_cv"])
+        for obs in observations:
+            # import ipdb;ipdb.set_trace()
+            for cam_name in obs["image"]:
+                data = obs["image"][cam_name]
+                colors.append(data["rgb"])
+                depths.append(data["depth"][:, :, 0])
+                extrinsics.append(obs["camera_param"][cam_name]["extrinsic_cv"])
+                intrinsics.append(obs["camera_param"][cam_name]["intrinsic_cv"])
         agent_obs = dict(
             color=colors, depth=depths, extrinsics=extrinsics, intrinsics=intrinsics
         )
@@ -83,10 +89,16 @@ class UserPolicy(BasePolicy):
         tcp = sapien.Pose(tcp[:3], tcp[3:])
 
         robot_qpos = observations["agent"]["qpos"]
-
-        if self.plan_stage == "init":
+        if self.plan_stage == "collect_data":
+            action, kept_obs, done = perform_initial_scan(self.env_step, observations)
+            if kept_obs is not None: self.scanned_observtions.append(kept_obs)
+            self.env_step += 1
+            if done:
+                self.plan_stage = "init"
+            return action
+        elif self.plan_stage == "init":
             # predict the goal location and rotation
-            act = self.agent.act(self.format_obs(observations), None, None)
+            act = self.agent.act(self.format_obs(self.scanned_observtions), None, None)
             self.rot_angle = utils.quatXYZW_to_eulerXYZ(act["pose1"][1])
             self.pred_obj_p = np.array([*act["pose0"][0][:2], 0.04])
             self.goal_p = np.array([*act["pose1"][0][:2], 0.04])
@@ -100,8 +112,6 @@ class UserPolicy(BasePolicy):
             def transform_camera_to_world(points, extrinsic):
                 A = (points - extrinsic[:3, 3]) @ extrinsic[:3, :3]
                 return A
-
-            # depths = [observations["image"]["base_camera"]["depth"], observations["image"]["hand_camera"]["depth"]]
             points = []
             for k in observations["image"].keys():
                 cam_data = observations["image"][k]

@@ -35,6 +35,7 @@ class AssemblingKitsSolver(MPSolver):
             debug=debug,
             vis=vis,
             gripper_type="gripper",
+            obs_mode="rgbd",
             **kwargs,
         )
         cfg = tf.config.experimental
@@ -62,7 +63,7 @@ class AssemblingKitsSolver(MPSolver):
         intrinsics = []
         for cam_name in obs["image"]:
             data = obs["image"][cam_name]
-            colors.append(data["rgb"])
+            colors.append(data["rgb"]/ 255.0) 
             depths.append(data["depth"][:, :, 0])
             extrinsics.append(obs["camera_param"][cam_name]["extrinsic_cv"])
             intrinsics.append(obs["camera_param"][cam_name]["intrinsic_cv"])
@@ -72,10 +73,10 @@ class AssemblingKitsSolver(MPSolver):
         return agent_obs
 
     def solve(self, **kwargs) -> dict:
-        super().solve(**kwargs)
+        obs = super().solve(**kwargs)
         # import ipdb;ipdb.set_trace()
         # self.env.env._obs_mode = 'rgbd'
-        obs = self.env.get_obs()
+        # obs = self.env.get_obs()
         # import ipdb;ipdb.set_trace()
         # self.env.env._obs_mode = 'none'
 
@@ -90,21 +91,29 @@ class AssemblingKitsSolver(MPSolver):
         approaching = (0, 0, -1)
         target_closing = self.env.tcp.pose.to_transformation_matrix()[:3, 1]
         gtobb = self.get_actor_obb(self.env.obj)
-
-        # find relevant points
-        self.env.env._obs_mode = "pointcloud"
-        obs = self.env.get_obs()
-        self.env.env._obs_mode = "none"
+        points = []
+        def transform_camera_to_world(points, extrinsic):
+            A = (points - extrinsic[:3, 3]) @ extrinsic[:3, :3]
+            return A
+        for k in obs["image"].keys():
+            cam_data = obs["image"][k]
+            # import ipdb;ipdb.set_trace()
+            depth = cam_data["depth"][:, :, 0]
+            intrinsic = obs["camera_param"][k]["intrinsic_cv"]
+            extrinsic = obs["camera_param"][k]["extrinsic_cv"]
+            xyz = utils.get_pointcloud(depth, intrinsic)
+            xyz = xyz.reshape(-1, 3)
+            xyz = transform_camera_to_world(xyz, extrinsic)
+            points.append(xyz)
         import trimesh
 
-        pcd = obs["pointcloud"]["xyzw"]
-        pcd = pcd[pcd[:, -1] == 1]
+        pcd = np.vstack(points)
         pcd = pcd[(pcd[:, 2] < 0.1) & (pcd[:, 2] > 0.027)]
         pcd = pcd[(pcd[:, 1] < 0.3) & (pcd[:, 1] > -0.3)]
         pcd = pcd[(pcd[:, 0] < 0.2) & (pcd[:, 0] > -0.15)]
         pcd = trimesh.PointCloud(pcd[:, :3])
 
-        # pcd.show()
+        pcd.show()
         obb = pcd.bounding_box_oriented
 
         grasp_info = self.compute_grasp_info_by_obb(

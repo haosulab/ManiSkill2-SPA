@@ -80,11 +80,11 @@ class MPSolver:
         self.planner.scene.addBox([1, 1, 1], [0, 0, -0.505], name="ground")
 
     def solve(self, **kwargs):
-        self.env.reset(**kwargs)
+        obs = self.env.reset(**kwargs)
         self.reset_planner()
         self.done = False
         self.info = {}
-
+        return obs
     def add_collision(self, actor: sapien.Actor, name: str = None):
         self.planner.scene.addOctree(
             points=get_actor_mesh(actor).sample(1500), resolution=0.0025, name=name

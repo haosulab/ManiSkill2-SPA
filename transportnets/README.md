@@ -43,6 +43,9 @@ To then test the model, run
 ```
 python test_gripper.py \
     --model="assembly144-transporter-1000-0" --n-steps=100000 --n-rotations=144 --json-name="train_episodes.json"
+
+python test_gripper.py \
+    --model="assembly2-transporter-1000-0" --n-steps=100000 --n-rotations=144 --json-name="train_episodes.json"
 ```
 
 You can also use `test_suction.py` to test with the suction gripper instead of a two-finger gripper. The pretrained models should get around 15-20% success rate of slotting in the piece into the assembly kit. -->
@@ -103,7 +106,7 @@ which will save models to `checkpoints/assembly144-transporter-1000-0`.
 
 
 ```
-conda create --name ms2tpnfix python=3.7
+conda create --name ms2tpn python=3.8
 conda activate ms2tpnfix
 
 git clone https://github.com/google-research/ravens.git

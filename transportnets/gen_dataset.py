@@ -13,7 +13,7 @@ import numpy as np
 import tqdm
 from mani_skill2.trajectory.merge_trajectory import merge_h5
 from transforms3d.euler import euler2quat
-
+from utils.vision import perform_initial_scan
 # def process_trajectory(output_h5: h5py.File):
 
 
@@ -48,7 +48,7 @@ def merge_h5(output_path: str, traj_paths, recompute_id=True):
 def main(args):
     env_name = "AssemblingKits-v0"
 
-    env = gym.make(env_name, obs_mode='rgbd')
+    env = gym.make(env_name, obs_mode='rgbd', control_mode="pd_ee_delta_pos")
     keys = args.keys
     worker_id = args.worker
     output_file = osp.join("/tmp", f"{worker_id}.h5")
@@ -73,21 +73,28 @@ def main(args):
         obs = env.reset(**reset_kwargs[cur_episode_num])
         env.set_state(init_env_state)
 
-        def process_obs(obs):
-            rgbs = []
-            depths = []
-            exts = []
-            ints = []
+        observations = []
+        done = False
+        env_step = 0
+        # run a scripted policy to simply scan the environment and make multiple captures for better estimation
+        while not done:
+            action, kept_obs, done = perform_initial_scan(env_step, obs)
+            env_step += 1
+            if kept_obs is not None: observations.append(kept_obs)
+            obs, _, _, _ = env.step(action)
+
+        rgbs = []
+        depths = []
+        cam_exts = []
+        cam_ints = []
+        for obs in observations:
             for cam in obs["image"].keys():
                 rgb = obs["image"][cam]["rgb"]
                 depth = obs["image"][cam]["depth"]
                 rgbs.append(rgb)
                 depths.append(depth)
-                ints.append(obs["camera_param"][cam]["intrinsic_cv"])
-                exts.append(obs["camera_param"][cam]["extrinsic_cv"])
-            return rgbs, depths, exts, ints
-
-        rgbs, depths, cam_exts, cam_ints = process_obs(obs)
+                cam_ints.append(obs["camera_param"][cam]["intrinsic_cv"])
+                cam_exts.append(obs["camera_param"][cam]["extrinsic_cv"])
         grp["rgbs"] = rgbs
         grp["depths"] = depths
         grp["cam_exts"] = cam_exts
@@ -104,11 +111,8 @@ def main(args):
         action_grp["p"] = [env.obj.pose.p, target_p]
         action_grp["q"] = [convert_q(env.obj.pose.q), convert_q(target_q)]
 
-        #
-        # flush_print(f"Finish using {output_file}")
         cnt += 1
         pbar.update(1)
-        # import ipdb;ipdb.set_trace()
     output_h5.close()
     return output_file
 
@@ -203,8 +207,11 @@ if __name__ == "__main__":
     for i in range(N * batch_size, len(keys)):
         args_iter[i % N].keys.append(keys[i])
 
-    with Pool(N) as p:
-        files = list(p.imap(main, args_iter))
+    if N == 1:
+        files = [main(args_iter[0])]
+    else:
+        with Pool(N) as p:
+            files = list(p.imap(main, args_iter))
     merge_h5(args.output_name, files)
     for file in files:
         rmtree(file, ignore_errors=True)
