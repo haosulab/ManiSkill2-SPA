@@ -1,6 +1,12 @@
 # Transporter Networks
 
-This folder provides a transporter networks baseline to solve the AssemblingKits task
+This folder provides a transporter networks baseline to solve the AssemblingKits task.
+
+The original Transporter Networks method has some imprecision that won't be able to solve the more strict ManiSkill2 AssemblingKits environment. As a result, as a more engineered solution this particular baseline does the following
+
+1. Perform an initial scan over the environment, capturing 10 images from the hand-view camera. This is all fused into a single bird-eye view camera and height map
+2. Train the Transporter Network on this scanned data, while also predicting a bin of 144 rotations instead of the default 36.
+3. During evaluation (e.g in the ManiSkill2 challenge), perform the same initial scan and then predict the pose of the target object and the pose of the goal object (the actions of the TransporterNetwork). A motion planning solution is then used to pick and place according to the predicted poses.
 
 ## Getting Started
 
@@ -8,23 +14,23 @@ This folder provides a transporter networks baseline to solve the AssemblingKits
 
 First create a new conda environment and install mani-skill2 and TransporterNetworks 
 ```
-conda create -n ms2tpn python==3.8
+conda create --name ms2tpn python=3.8
 conda activate ms2tpn
-pip install mani-skill2
 
 # clone transporternetworks (called ravens) and install it
 git clone https://github.com/google-research/ravens.git
 cd ravens
 pip install -r requirements.txt
 python setup.py install --user
-```
 
-For some systems you may need a specific version of cudatoolkit, cudnn, and tensorflow.
-```
-pip install --upgrade numpy
-conda install -c conda-forge cudatoolkit=11.2 cudnn=8.1.0
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/ # might be necessary to get code to run
-python3 -m pip install --upgrade tensorflow # You can upgrade tensorflow to 2.10.0 if 2.3.0 does not work
+# install an appropriate tensorflow version. 2.11 works
+conda install -c conda-forge cudatoolkit=11.2.2 cudnn=8.1.0
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
+pip install --upgrade pip
+pip install tensorflow==2.11.*
+pip install tensorflow-addons==0.19.0
+
+pip install mani-skill2
 ```
 
 Then install pymp, a suite of motion planning tools.
@@ -89,7 +95,7 @@ python gen_dataset.py --num-procs 8 \
 To run the training code, simply run the following
 
 ```
-python train.py --task=assembly --agent=transporter --n_demos=1000 --n_rotations=144 
+python train.py --task=assemblyscan --agent=transporter --n_demos=1000 --n_rotations=144 
 ```
 
 which will save models to `checkpoints/assembly144-transporter-1000-0`.

@@ -72,7 +72,7 @@ class DatasetManiskill:
         episode = self.data[episode_id]
         # import ipdb;ipdb.set_trace()
 
-        colors = np.array(episode['rgbs']) / 255.0
+        colors = np.array(episode['rgbs'])
         depths = np.array(episode['depths'])[:, :, :, 0]
         extrinsics = np.array(episode['cam_exts'])
         intrinsics = np.array(episode['cam_ints'])
@@ -82,6 +82,7 @@ class DatasetManiskill:
             extrinsics=extrinsics,
             intrinsics=intrinsics
         )
+        
         action = dict(
             pose0=(episode['action']['p'][0], episode['action']['q'][0]),
             pose1=(episode['action']['p'][1], episode['action']['q'][1])

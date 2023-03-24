@@ -39,8 +39,8 @@ class TransporterAgent:
         self.crop_size = 64
         self.n_rotations = n_rotations
         self.pix_size = 0.003125
-        # self.in_shape = (320, 160, 6)
-        self.in_shape = (256, 128, 6)
+        self.in_shape = (320, 160, 6)
+        # self.in_shape = (256, 128, 6)
         self.cam_config = cameras.RealSenseD415.CONFIG
         self.models_dir = os.path.join(root_dir, "checkpoints", self.name)
         self.bounds = np.array([[0.25, 0.75], [-0.5, 0.5], [0, 0.28]])
@@ -51,7 +51,7 @@ class TransporterAgent:
             self.bounds = np.array([[-0.16, 0.16], [-0.32, 0.32], [-1, 0.06]])
 
             # hmap,cmap=utils.get_heightmap(xyz, color, bounds, 1/300)
-            self.pix_size = 0.0025
+            self.pix_size = 0.002
 
     def get_image(self, obs):
         """Stack color and height images image."""
@@ -113,11 +113,13 @@ class TransporterAgent:
         p0_theta = 0
         print("p1 theta", p1_theta)
         # Data augmentation.
+        # np.save("sample2",(img, p0, p0_theta, p1, p1_theta, act))
         if augment:
             img, _, (p0, p1), _ = utils.perturb(img, [p0, p1])
         # import matplotlib.pyplot as plt
         # plt.imshow(img[:,:,:3]/255)
         np.save("sample",(img, p0, p0_theta, p1, p1_theta, act))
+        # import ipdb;ipdb.set_trace()
         return img, p0, p0_theta, p1, p1_theta, act
 
     def train(self, dataset, writer=None):
@@ -171,6 +173,7 @@ class TransporterAgent:
         n_iter = 10
         loss0, loss1 = 0, 0
         goal_rot_error = 0
+        goal_rot_error_delta = 0
         source_translation_error, goal_translation_error = 0, 0
         for i in range(n_iter):
             img, p0, p0_theta, p1, p1_theta, gt_act = self.get_sample(dataset, False)
@@ -192,6 +195,9 @@ class TransporterAgent:
             goal_rot_error += np.linalg.norm(
                 pred_action["pose1"][1] - gt_act["pose1"][1]
             )
+            goal_rot_error_delta += np.linalg.norm(
+                pred_action["pose1"][1] - (gt_act["pose1"][1] - gt_act["pose0"][1])
+            )
             # print(pred_action['pose1'][1], gt_act['pose1'][1])
 
         loss0 /= n_iter
@@ -199,6 +205,7 @@ class TransporterAgent:
         source_translation_error /= n_iter
         goal_translation_error /= n_iter
         goal_rot_error /= n_iter
+        goal_rot_error_delta /= n_iter
 
         with writer.as_default():
             sc = tf.summary.scalar
@@ -215,6 +222,8 @@ class TransporterAgent:
                 self.total_steps,
             )
             sc("test_loss/goal_rot_error", goal_rot_error, self.total_steps)
+            sc("test_loss/goal_rot_error_delta", goal_rot_error_delta, self.total_steps)
+
         print(
             f"Validation Loss: {loss0:.4f} {loss1:.4f} - s {source_translation_error:.4f} - g {goal_translation_error:.4f} - r {goal_rot_error:.4f}"
         )

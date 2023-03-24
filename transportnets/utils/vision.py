@@ -12,13 +12,15 @@ def perform_initial_scan(step: int, obs):
     Performs an initial scan by scanning along two rows and returning the hand view camera capture. Moves closer to the board before starting to get higher quality captures.
 
     For the ManiSkill2 challenge this is necessary for some robotics solutions as the default camera capture is 128x128 which is not precise enough. 
+
+    This uses pd_ee_delta_pose. The user solution uses pd_joint_pos, so in the first run first save the sequence of joint q_pos values as hardcoded actions to execute.
     """
     def strip_base_view(obs):
         del obs["image"]["base_camera"]
         return obs
-    if step < 4:
+    if step < 5:
         # get down lower
-        return np.array([-1, 0, 0.55, 0]), None, False
+        return np.array([-.9, 0, 0.44, 0]), None, False
     def scan_horizontal(step):
         if step < 6:
             return np.array([0, -1, 0, 0]), strip_base_view(obs) if step == 5 else None, False
@@ -30,12 +32,12 @@ def perform_initial_scan(step: int, obs):
             return np.array([0, 1, 0, 0]), strip_base_view(obs) if step == 14 else None, False
         if step < 18:
             return np.array([0, 1, 0, 0]), strip_base_view(obs) if step == 17 else None, False
-    if step < 4 + 18: return scan_horizontal(step - 4)
-    if step < 4+18+3:
+    if step < 5 + 18: return scan_horizontal(step - 5)
+    if step < 5+18+3:
         return np.array([1, -1,0,0]), None, False
-    if step < 4+18+6:
+    if step < 5+18+6:
         return np.array([0, -1,0,0]), None, False
-    if step < 4 + 18 + 6 + 18: return scan_horizontal(step - 4 - 18 - 6)
+    if step < 5 + 18 + 6 + 18: return scan_horizontal(step - 5 - 18 - 6)
     return np.zeros(4), None, True
 
 

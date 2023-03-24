@@ -63,7 +63,7 @@ class AssemblingKitsSolver(MPSolver):
         intrinsics = []
         for cam_name in obs["image"]:
             data = obs["image"][cam_name]
-            colors.append(data["rgb"]/ 255.0) 
+            colors.append(data["rgb"]) 
             depths.append(data["depth"][:, :, 0])
             extrinsics.append(obs["camera_param"][cam_name]["extrinsic_cv"])
             intrinsics.append(obs["camera_param"][cam_name]["intrinsic_cv"])

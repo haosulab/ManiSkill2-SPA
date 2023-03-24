@@ -5,7 +5,7 @@ import os.path as osp
 import time
 from multiprocessing import Pool
 from shutil import rmtree
-
+import pickle
 import gym
 import h5py
 import mani_skill2.envs
@@ -48,7 +48,7 @@ def merge_h5(output_path: str, traj_paths, recompute_id=True):
 def main(args):
     env_name = "AssemblingKits-v0"
 
-    env = gym.make(env_name, obs_mode='rgbd', control_mode="pd_ee_delta_pos")
+    env = gym.make(env_name, obs_mode='rgbd', control_mode="pd_joint_pos")
     keys = args.keys
     worker_id = args.worker
     output_file = osp.join("/tmp", f"{worker_id}.h5")
@@ -76,13 +76,28 @@ def main(args):
         observations = []
         done = False
         env_step = 0
+        qpos_sequence = []
+        with open("qpos_scan_sequence.pkl", "rb") as f:
+            qpos_sequence = pickle.load(f)
         # run a scripted policy to simply scan the environment and make multiple captures for better estimation
-        while not done:
-            action, kept_obs, done = perform_initial_scan(env_step, obs)
-            env_step += 1
-            if kept_obs is not None: observations.append(kept_obs)
-            obs, _, _, _ = env.step(action)
+        for i in range(len(qpos_sequence)):
+            action, capture = qpos_sequence[i]
+            obs, _, _, _ = env.step(action[:-1])
+            if capture:
+                observations.append(obs)
 
+        # commented out code below was used to generate the initial qpos_scan_sequence.pkl file using pd_ee_delta_pos actions
+        # while not done:
+        #     action, kept_obs, done = perform_initial_scan(env_step, obs)
+        #     env_step += 1
+        #     if kept_obs is not None: observations.append(kept_obs)
+        #     obs, _, _, _ = env.step(action)
+        #     qpos = env.agent.robot.get_qpos()
+        #     qpos_sequence.append((qpos, kept_obs is not None))
+        #     # import ipdb;ipdb.set_trace()
+        # with open("qpos_scan_sequence.pkl", "wb") as f:
+        #     # pickle. ("qpos_scan_sequence", np.array(qpos_sequence))
+        #     pickle.dump(qpos_sequence, f)
         rgbs = []
         depths = []
         cam_exts = []
