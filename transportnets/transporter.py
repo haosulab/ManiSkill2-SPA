@@ -39,8 +39,8 @@ class TransporterAgent:
         self.crop_size = 64
         self.n_rotations = n_rotations
         self.pix_size = 0.003125
-        self.in_shape = (320, 160, 6)
-        # self.in_shape = (187, 100, 6)
+        # self.in_shape = (320, 160, 6)
+        self.in_shape = (256, 128, 6)
         self.cam_config = cameras.RealSenseD415.CONFIG
         self.models_dir = os.path.join(root_dir, "checkpoints", self.name)
         self.bounds = np.array([[0.25, 0.75], [-0.5, 0.5], [0, 0.28]])
@@ -51,7 +51,7 @@ class TransporterAgent:
             self.bounds = np.array([[-0.16, 0.16], [-0.32, 0.32], [-1, 0.06]])
 
             # hmap,cmap=utils.get_heightmap(xyz, color, bounds, 1/300)
-            self.pix_size = 0.002
+            self.pix_size = 0.0025
 
     def get_image(self, obs):
         """Stack color and height images image."""
@@ -79,6 +79,7 @@ class TransporterAgent:
             (cmap, hmap[Ellipsis, None], hmap[Ellipsis, None], hmap[Ellipsis, None]),
             axis=2,
         )
+        # np.save("sample",(img, None))
         # import ipdb;ipdb.set_trace()
         assert img.shape == self.in_shape, img.shape
         return img
