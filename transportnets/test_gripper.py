@@ -56,34 +56,47 @@ class AssemblingKitsSolver(MPSolver):
 
         self.agent = agent
 
-    def format_obs(self, obs):
+    def format_obs(self, observations):
         colors = []
         depths = []
         extrinsics = []
         intrinsics = []
-        for cam_name in obs["image"]:
-            data = obs["image"][cam_name]
-            colors.append(data["rgb"]) 
-            depths.append(data["depth"][:, :, 0])
-            extrinsics.append(obs["camera_param"][cam_name]["extrinsic_cv"])
-            intrinsics.append(obs["camera_param"][cam_name]["intrinsic_cv"])
+        for obs in observations:
+            for cam_name in obs["image"]:
+                data = obs["image"][cam_name]
+                colors.append(data["rgb"]) 
+                depths.append(data["depth"][:, :, 0])
+                extrinsics.append(obs["camera_param"][cam_name]["extrinsic_cv"])
+                intrinsics.append(obs["camera_param"][cam_name]["intrinsic_cv"])
         agent_obs = dict(
             color=colors, depth=depths, extrinsics=extrinsics, intrinsics=intrinsics
         )
         return agent_obs
 
     def solve(self, **kwargs) -> dict:
-        obs = super().solve(**kwargs)
+        start_obs = super().solve(**kwargs)
         # import ipdb;ipdb.set_trace()
         # self.env.env._obs_mode = 'rgbd'
         # obs = self.env.get_obs()
         # import ipdb;ipdb.set_trace()
         # self.env.env._obs_mode = 'none'
-
-        act = self.agent.act(self.format_obs(obs), None, None)
+        observations = []
+        with open("qpos_scan_sequence.pkl", "rb") as f:
+            qpos_sequence = pickle.load(f)
+        # run a scripted policy to simply scan the environment and make multiple captures for better estimation
+        for i in range(len(qpos_sequence)):
+            action, capture = qpos_sequence[i]
+            obs, _, _, _ = self.env.step(action[:-1])
+            self.env.render()
+            if capture:
+                observations.append(obs)
+        for i in range(6):
+            self.env.step(start_obs['agent']['qpos'][:-1])
+            self.env.render()
+        act = self.agent.act(self.format_obs(observations), None, None)
         rot_angle = utils.quatXYZW_to_eulerXYZ(act["pose1"][1])
-
-        goal_p = [*act["pose1"][0][:2], 0.04]
+        print(act["pose1"], self.env.objects_pos[self.env.object_id])
+        goal_p = [*act["pose1"][0][:2], 0.05]
         # self.add_collision(self.env.kit, "kit")
         # self.add_collision(self.env.obj, "obj")
 
@@ -95,12 +108,12 @@ class AssemblingKitsSolver(MPSolver):
         def transform_camera_to_world(points, extrinsic):
             A = (points - extrinsic[:3, 3]) @ extrinsic[:3, :3]
             return A
-        for k in obs["image"].keys():
-            cam_data = obs["image"][k]
+        for k in start_obs["image"].keys():
+            cam_data = start_obs["image"][k]
             # import ipdb;ipdb.set_trace()
             depth = cam_data["depth"][:, :, 0]
-            intrinsic = obs["camera_param"][k]["intrinsic_cv"]
-            extrinsic = obs["camera_param"][k]["extrinsic_cv"]
+            intrinsic = start_obs["camera_param"][k]["intrinsic_cv"]
+            extrinsic = start_obs["camera_param"][k]["extrinsic_cv"]
             xyz = utils.get_pointcloud(depth, intrinsic)
             xyz = xyz.reshape(-1, 3)
             xyz = transform_camera_to_world(xyz, extrinsic)
@@ -113,7 +126,7 @@ class AssemblingKitsSolver(MPSolver):
         pcd = pcd[(pcd[:, 0] < 0.2) & (pcd[:, 0] > -0.15)]
         pcd = trimesh.PointCloud(pcd[:, :3])
 
-        pcd.show()
+        # pcd.show()
         obb = pcd.bounding_box_oriented
 
         grasp_info = self.compute_grasp_info_by_obb(
@@ -126,7 +139,7 @@ class AssemblingKitsSolver(MPSolver):
 
         # Reach
         reach_pos = grasp_pose.p
-        reach_pos[2] = 0.04
+        reach_pos[2] = 0.05
         reach_pose = sapien.Pose(reach_pos, grasp_pose.q)
         plan = self.planner.plan_screw(reach_pose, self.env.agent.robot.get_qpos())
         if plan["status"] == "plan_failure":
@@ -150,17 +163,18 @@ class AssemblingKitsSolver(MPSolver):
         # Close gripper
         self.execute_plan2(plan, self.CLOSE_GRIPPER_POS, 10)
         self.render_wait()
-
+        print("CLOSE GRIPPER")
         hold_pos = grasp_pose.p
-        hold_pos[2] = 0.035
+        hold_pos[2] = 0.06
         hold_pose = sapien.Pose(hold_pos, grasp_pose.q)
         plan = self.plan_screw(hold_pose)
         self.execute_plan(plan, self.CLOSE_GRIPPER_POS)
         self.render_wait()
 
         goal_pos = goal_p
-        goal_pos[2] = 0.03
+        goal_pos[2] = 0.05
         obj_goal_pose = sapien.Pose(goal_pos, [1, 0, 0, 0])
+        
         initial_tcp_q = self.env.tcp.pose.q
         goal_tcp_euler_xyz = utils.quatXYZW_to_eulerXYZ(
             [initial_tcp_q[1], initial_tcp_q[2], initial_tcp_q[3], initial_tcp_q[0]]
@@ -174,10 +188,12 @@ class AssemblingKitsSolver(MPSolver):
         )
         goal_tcp_q = [goal_tcp_q[3], goal_tcp_q[0], goal_tcp_q[1], goal_tcp_q[2]]
 
-        tcp_goal_pose = obj_goal_pose * self.env.tcp.pose * self.env.tcp.pose
+        tcp_goal_pose = obj_goal_pose# * self.env.tcp.pose * self.env.tcp.pose
         tcp_goal_pose.set_q(goal_tcp_q)
 
         plan = self.plan_screw(tcp_goal_pose)
+        # print("MOVE TO", obj_goal_pose, tcp_goal_pose)
+        # import ipdb;ipdb.set_trace()
         if plan["status"] == "plan_failure":
             lowest_plan_step = np.inf
             for _ in range(10):

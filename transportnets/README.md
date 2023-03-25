@@ -51,7 +51,7 @@ python test_gripper.py \
     --model="assembly144-transporter-1000-0" --n-steps=100000 --n-rotations=144 --json-name="train_episodes.json"
 
 python test_gripper.py \
-    --model="assembly2-transporter-1000-0" --n-steps=100000 --n-rotations=144 --json-name="train_episodes.json"
+    --model="assemblyscan-transporter-1000-0" --n-steps=100000 --n-rotations=144 --json-name="train_episodes.json"
 ```
 
 You can also use `test_suction.py` to test with the suction gripper instead of a two-finger gripper. The pretrained models should get around 15-20% success rate of slotting in the piece into the assembly kit. -->
