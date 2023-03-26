@@ -24,8 +24,8 @@ class UserPolicy(BasePolicy):
         self.solver = MPSolver(
             env_name="AssemblingKits-v0",
             ee_link="panda_hand_tcp",
-            joint_vel_limits=1.5,
-            joint_acc_limits=1.5,
+            joint_vel_limits=3,
+            joint_acc_limits=3,
             debug=False,
             vis=True,
             gripper_type="gripper",
@@ -175,10 +175,14 @@ class UserPolicy(BasePolicy):
                 self.plan_if_fail(reach_pose, robot_qpos)
                 self.plan_length = len(self.plan["position"])
             elif self.plan_stage == "grasp":
+                self.solver.planner.joint_acc_limits = 0.3
+                self.solver.planner.joint_vel_limits = 0.4
                 self.next_plan_stage = "close_gripper"
                 self.plan = self.solver.planner.plan_screw(self.grasp_pose, robot_qpos)
                 self.plan_length = len(self.plan["position"])
             elif self.plan_stage == "close_gripper":
+                self.solver.planner.joint_acc_limits =3
+                self.solver.planner.joint_vel_limits =3
                 self.next_plan_stage = "hold_obj"
                 self.plan_length = 5
                 self.plan = 1
@@ -230,7 +234,7 @@ class UserPolicy(BasePolicy):
                 # import ipdb;ipdb.set_trace()
                 tcp_goal_pose_p = tcp.p + translation
                 tcp_goal_pose_p = tcp_goal_pose.p
-                tcp_goal_pose_p[2] = 0.04
+                tcp_goal_pose_p[2] = 0.05
                 # tcp_goal_pose = sapien.Pose(tcp_goal_pose_p, goal_tcp_q)
                 tcp_goal_pose.set_p(tcp_goal_pose_p)
                 tcp_goal_pose.set_q(goal_tcp_q)
@@ -242,10 +246,12 @@ class UserPolicy(BasePolicy):
             elif self.plan_stage == "drop":
                 self.next_plan_stage = "open_gripper"
                 tcp_goal_pose_p = self.tcp_goal_pose.p
-                tcp_goal_pose_p[2] = 0.03
+                self.solver.planner.joint_acc_limits = 0.3
+                self.solver.planner.joint_vel_limits = 0.4
+                tcp_goal_pose_p[2] = 0.04
                 self.tcp_goal_pose.set_p(tcp_goal_pose_p)
                 self.plan = self.solver.planner.plan_screw(
-                    self.tcp_goal_pose, robot_qpos
+                    self.tcp_goal_pose, robot_qpos, goal_thresh=0.0001, qpos_step=0.05
                 )
                 self.plan_length = len(self.plan["position"])
             elif self.plan_stage == "open_gripper":
