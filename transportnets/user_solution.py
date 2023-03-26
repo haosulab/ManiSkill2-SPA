@@ -6,7 +6,7 @@ from utils.vision import perform_initial_scan
 from ravens.utils import utils
 from solver import MPSolver
 from transporter import OriginalTransporterAgent
-
+import pickle
 
 class UserPolicy(BasePolicy):
     FINGER_LENGTH = 0.025
@@ -24,36 +24,39 @@ class UserPolicy(BasePolicy):
         self.solver = MPSolver(
             env_name="AssemblingKits-v0",
             ee_link="panda_hand_tcp",
-            joint_vel_limits=0.7,
-            joint_acc_limits=0.5,
+            joint_vel_limits=1.5,
+            joint_acc_limits=1.5,
             debug=False,
             vis=True,
             gripper_type="gripper",
         )
         agent = OriginalTransporterAgent(
-            "assembly144-transporter-1000-0", "assembly", ".", n_rotations=144
+            "assemblyscan-transporter-1000-0", "assembly", ".", n_rotations=144
         )
         agent.load(100_000)
 
         self.agent = agent
         self.next_plan_stage = None
-        self.plan_stage = "init"
+        self.plan_stage = "collect_data"
         self.plan = None
         self.env_step = 0
         self.plan_step = 0
         self.planned_grip = self.OPEN_GRIPPER_POS
-
+        self.original_q_pos = None
         self.scanned_observtions = []
+        with open("qpos_scan_sequence.pkl", "rb") as f:
+            self.qpos_sequence = pickle.load(f)
 
     def reset(self, observations):
         self.next_plan_stage = None
-        self.plan_stage = "init"
+        self.plan_stage = "collect_data"
         self.plan = None
         self.env_step = 0
         self.plan_step = 0
         self.planned_grip = self.OPEN_GRIPPER_POS
         self.solver.reset_planner()
         self.scanned_observtions = []
+        self.original_q_pos = None
 
     def format_obs(self, observations):
         colors = []
@@ -61,7 +64,6 @@ class UserPolicy(BasePolicy):
         extrinsics = []
         intrinsics = []
         for obs in observations:
-            # import ipdb;ipdb.set_trace()
             for cam_name in obs["image"]:
                 data = obs["image"][cam_name]
                 colors.append(data["rgb"])
@@ -83,19 +85,29 @@ class UserPolicy(BasePolicy):
                         self.plan = tentative_plan
 
     def act(self, observations):
-        # return self.action_space.sample()
-
         tcp = observations["extra"]["tcp_pose"]
         tcp = sapien.Pose(tcp[:3], tcp[3:])
 
         robot_qpos = observations["agent"]["qpos"]
+
+        # for the first two stages of the plan, collect_data and init we handle the special actions
+        # and logic which primarily collects multiple views of the board, then computes predictions for use in subsequent
+        # plans
         if self.plan_stage == "collect_data":
-            action, kept_obs, done = perform_initial_scan(self.env_step, observations)
-            if kept_obs is not None: self.scanned_observtions.append(kept_obs)
+            if self.env_step == 0:
+                self.original_q_pos = observations["agent"]["qpos"]
+                self.first_observation = observations
+            # run a scripted policy to simply scan the environment and make multiple captures for better estimation
+            if self.env_step < len(self.qpos_sequence):
+                action, capture = self.qpos_sequence[self.env_step]
+                if capture:
+                    self.scanned_observtions.append(observations)
+            elif self.env_step < len(self.qpos_sequence) + 4:
+                action = self.original_q_pos
             self.env_step += 1
-            if done:
+            if self.env_step >= len(self.qpos_sequence) + 4:
                 self.plan_stage = "init"
-            return action
+            return action[:-1]
         elif self.plan_stage == "init":
             # predict the goal location and rotation
             act = self.agent.act(self.format_obs(self.scanned_observtions), None, None)
@@ -113,27 +125,17 @@ class UserPolicy(BasePolicy):
                 A = (points - extrinsic[:3, 3]) @ extrinsic[:3, :3]
                 return A
             points = []
-            for k in observations["image"].keys():
-                cam_data = observations["image"][k]
-                # import ipdb;ipdb.set_trace()
+            for k in self.first_observation["image"].keys():
+                cam_data = self.first_observation["image"][k]
                 depth = cam_data["depth"][:, :, 0]
-                intrinsic = observations["camera_param"][k]["intrinsic_cv"]
-                extrinsic = observations["camera_param"][k]["extrinsic_cv"]
+                intrinsic = self.first_observation["camera_param"][k]["intrinsic_cv"]
+                extrinsic = self.first_observation["camera_param"][k]["extrinsic_cv"]
                 xyz = utils.get_pointcloud(depth, intrinsic)
                 xyz = xyz.reshape(-1, 3)
                 xyz = transform_camera_to_world(xyz, extrinsic)
                 points.append(xyz)
-            # observations["image"]["hand_camera"]["depth"] # (640, 640, 1)
-            # observations["image"]["base_camera"]["depth"]
-            # self.env.env._obs_mode = 'pointcloud'
-            # obs = self.env.get_obs()
-            # self.env.env._obs_mode = 'none'
-            # import ipdb;ipdb.set_trace()
             import trimesh
-
             pcd = np.vstack(points)
-            # pcd = obs['pointcloud']['xyzw']
-            # pcd = pcd[pcd[:, -1] == 1]
             pcd = pcd[(pcd[:, 2] < 0.1) & (pcd[:, 2] > 0.027)]
             pcd = pcd[(pcd[:, 1] < 0.3) & (pcd[:, 1] > -0.3)]
             pcd = pcd[(pcd[:, 0] < 0.2) & (pcd[:, 0] > -0.15)]
@@ -152,7 +154,7 @@ class UserPolicy(BasePolicy):
             )
             # self.next_plan_stage = "reach"
             self.plan_stage = "reach"
-
+        
         if self.plan is not None:
             # if current plan is complete, change plan stage to next one so we can generate a new plane
             if self.plan_step >= self.plan_length:
@@ -161,11 +163,13 @@ class UserPolicy(BasePolicy):
                 self.plan_step = 0
                 self.plan = None
 
+        # Plan organization and logic.
+        # Generally first executes the current plan while setting the what the next plan is if this plan is done.
         if self.plan is None:
             if self.plan_stage == "reach":
                 self.next_plan_stage = "grasp"
                 reach_pos = self.grasp_pose.p
-                reach_pos[2] = 0.045
+                reach_pos[2] = 0.05
                 reach_pose = sapien.Pose(reach_pos, self.grasp_pose.q)
                 self.plan = self.solver.planner.plan_screw(reach_pose, robot_qpos)
                 self.plan_if_fail(reach_pose, robot_qpos)
@@ -174,31 +178,28 @@ class UserPolicy(BasePolicy):
                 self.next_plan_stage = "close_gripper"
                 self.plan = self.solver.planner.plan_screw(self.grasp_pose, robot_qpos)
                 self.plan_length = len(self.plan["position"])
-                pass
             elif self.plan_stage == "close_gripper":
                 self.next_plan_stage = "hold_obj"
-                self.plan_length = 10
+                self.plan_length = 5
                 self.plan = 1
                 self.planned_grip = self.CLOSE_GRIPPER_POS
-                pass
             elif self.plan_stage == "hold_obj":
                 self.next_plan_stage = "grasp_reach"
                 hold_pos = self.grasp_pose.p
-                hold_pos[2] = 0.045
+                hold_pos[2] = 0.05
                 hold_pose = sapien.Pose(hold_pos, self.grasp_pose.q)
                 self.planned_grip = self.CLOSE_GRIPPER_POS
                 self.plan = self.solver.planner.plan_screw(hold_pose, robot_qpos)
                 self.plan_length = len(self.plan["position"])
-
             elif self.plan_stage == "grasp_reach":
                 self.next_plan_stage = "drop"
                 self.planned_grip = self.CLOSE_GRIPPER_POS
 
                 # determine correct goal pose and rotation angle.
                 goal_pos = self.goal_p
-                goal_pos[2] = 0.03
+                goal_pos[2] = 0.05
                 obj_goal_pose = sapien.Pose(goal_pos, [1, 0, 0, 0])
-                initial_tcp_q = tcp.q  # self.env.tcp.pose.q
+                initial_tcp_q = tcp.q
                 goal_tcp_euler_xyz = utils.quatXYZW_to_eulerXYZ(
                     [
                         initial_tcp_q[1],
@@ -223,13 +224,13 @@ class UserPolicy(BasePolicy):
 
                 translation = goal_pos - self.pred_obj_p
 
-                obj_pose = sapien.Pose(self.pred_obj_p)
-                obj_pose = tcp  # which is more accurate? Probably tcp
-                tcp_goal_pose = obj_goal_pose * obj_pose.inv() * tcp
+                # obj_pose = sapien.Pose(self.pred_obj_p)
+                # obj_pose = tcp  # which is more accurate? Probably tcp
+                tcp_goal_pose = obj_goal_pose# * obj_pose.inv() * tcp
                 # import ipdb;ipdb.set_trace()
-                # tcp_goal_pose_p = tcp.p + translation
+                tcp_goal_pose_p = tcp.p + translation
                 tcp_goal_pose_p = tcp_goal_pose.p
-                tcp_goal_pose_p[2] = 0.045
+                tcp_goal_pose_p[2] = 0.04
                 # tcp_goal_pose = sapien.Pose(tcp_goal_pose_p, goal_tcp_q)
                 tcp_goal_pose.set_p(tcp_goal_pose_p)
                 tcp_goal_pose.set_q(goal_tcp_q)
@@ -238,12 +239,10 @@ class UserPolicy(BasePolicy):
                 self.plan = self.solver.planner.plan_screw(tcp_goal_pose, robot_qpos)
                 self.plan_if_fail(tcp_goal_pose, robot_qpos)
                 self.plan_length = len(self.plan["position"])
-
-                pass
             elif self.plan_stage == "drop":
                 self.next_plan_stage = "open_gripper"
                 tcp_goal_pose_p = self.tcp_goal_pose.p
-                tcp_goal_pose_p[2] = 0.02
+                tcp_goal_pose_p[2] = 0.03
                 self.tcp_goal_pose.set_p(tcp_goal_pose_p)
                 self.plan = self.solver.planner.plan_screw(
                     self.tcp_goal_pose, robot_qpos

@@ -2,7 +2,7 @@
   "env_info": {
     "env_id": "AssemblingKits-v0",
     "env_kwargs": {
-      "asset_root": "{ASSET_DIR}/assembling_kits_eval/train_1"
+      "asset_root": "{ASSET_DIR}/assembling_kits"
     }
   },
   "episodes": [
