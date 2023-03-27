@@ -1,12 +1,12 @@
 # Transporter Networks
 
-This folder provides a transporter networks baseline to solve the AssemblingKits task.
+This folder provides a [Transporter Networks](https://github.com/google-research/ravens) baseline to solve the AssemblingKits task.
 
 The original Transporter Networks method has some imprecision that won't be able to solve the more strict ManiSkill2 AssemblingKits environment. As a result, as a more engineered solution this particular baseline does the following
 
 1. Perform an initial scan over the environment, capturing 10 images from the hand-view camera. This is all fused into a single bird-eye view camera and height map. The initial scan is done using the `pd_joint_pos` actions in `qpos_scan_sequence.pkl`
 2. Train the Transporter Network on this scanned data, while also predicting a bin of 144 rotations instead of the default 36.
-3. During evaluation (e.g in the ManiSkill2 challenge), perform the same initial scan and then predict the pose of the target object and the pose of the goal object (the actions of the TransporterNetwork). A motion planning solution is then used to pick and place according to the predicted poses.
+3. During evaluation (e.g in the ManiSkill2 challenge), perform the same initial scan and then predict the pose of the target object and the pose of the goal object (the actions of the Transporter Network). A motion planning solution is then used to pick and place according to the predicted poses.
 
 The initial scan + motion planning solution looks as follows:
 
@@ -19,7 +19,7 @@ First create a new conda environment and install mani-skill2 and TransporterNetw
 conda create --name ms2tpn python=3.8
 conda activate ms2tpn
 
-# clone transporternetworks (called ravens) and install it
+# clone transporter networks (called ravens) and install it
 git clone https://github.com/google-research/ravens.git
 cd ravens
 pip install -r requirements.txt
@@ -55,7 +55,7 @@ which uses the local user_solution.py file to solve the AssemblingKits environme
 
 The config-file train_episodes.json is an example evaluation configuration for local test purposes. The pretrained model after 100,000 training steps should get around a success rate of 14%.
 
-The original TransporterNetworks paper uses a more relaxed requirement for their AssemblingKits environment, to see the success rate of a model using the relaxed requirements see the `out/average_metrics.json` file and check the `pos_correct` and `rot_correct` keys, which is the proportion of evaluation episodes that succesfully positioned and rotated an object to the goal location under relaxed requirements.
+The original Transporter Networks paper uses a more relaxed requirement for their AssemblingKits environment, to see the success rate of a model using the relaxed requirements see the `out/average_metrics.json` file and check the `pos_correct` and `rot_correct` keys, which is the proportion of evaluation episodes that succesfully positioned and rotated an object to the goal location under relaxed requirements.
 
 ### Training 
 
