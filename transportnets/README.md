@@ -10,7 +10,7 @@ The original Transporter Networks method has some imprecision that won't be able
 
 The initial scan + motion planning solution looks as follows:
 
-![Example video visualizing the initial scan + motion planning solution](./assets/example.mp4)
+![Example video visualizing the initial scan + motion planning solution](./assets/example.gif)
 
 ## Installation
 
