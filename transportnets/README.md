@@ -104,8 +104,8 @@ Full instructions here https://haosulab.github.io/ManiSkill2/benchmark/submissio
 Otherwise you can simply run the following
 ```
 docker build -t ms2tpn .
-docker tag ms2tpn ${DOCKERHUB_USER_NAME}/mani-skill2-submission:${UNIQUE_TAG}
-docker push ${DOCKERHUB_USER_NAME}/mani-skill2-submission:${UNIQUE_TAG}
+docker tag ms2tpn ${DOCKERHUB_USER_NAME}/ms2-tpn-submission:${UNIQUE_TAG}
+docker push ${DOCKERHUB_USER_NAME}/ms2-tpn-submission:${UNIQUE_TAG}
 ```
 
 and submit the pushed docker image and tag to the challenge.
