@@ -67,10 +67,8 @@ class DatasetManiskill:
           episode: list of (obs, act, reward, info) tuples.
           seed: random seed used to initialize the episode.
         """
-        # import ipdb;ipdb.set_trace()
         episode_id = f"traj_{episode_id}"
         episode = self.data[episode_id]
-        # import ipdb;ipdb.set_trace()
 
         colors = np.array(episode['rgbs'])
         depths = np.array(episode['depths'])[:, :, :, 0]
@@ -178,9 +176,4 @@ class DatasetManiskill:
         else:
             episode_id = np.random.choice(range(self.n_episodes))
         episode, _ = self.load(episode_id, images, cache)
-
-        # Return random observation action pair (and goal) from episode.
-        # import ipdb;ipdb.set_trace()
-        # i = np.random.choice(range(len(episode) - 1))
-        # sample, goal = episode[i], episode[-1]
         return episode[0], episode[0]
