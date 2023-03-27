@@ -31,7 +31,7 @@ class UserPolicy(BasePolicy):
             gripper_type="gripper",
         )
         agent = OriginalTransporterAgent(
-            "assemblyscan-transporter-1000-0", "assembly", ".", n_rotations=144
+            "assembly-transporter-1000-0", "assembly", ".", n_rotations=144
         )
         agent.load(100_000)
 

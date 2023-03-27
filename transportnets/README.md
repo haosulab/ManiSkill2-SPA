@@ -4,13 +4,15 @@ This folder provides a transporter networks baseline to solve the AssemblingKits
 
 The original Transporter Networks method has some imprecision that won't be able to solve the more strict ManiSkill2 AssemblingKits environment. As a result, as a more engineered solution this particular baseline does the following
 
-1. Perform an initial scan over the environment, capturing 10 images from the hand-view camera. This is all fused into a single bird-eye view camera and height map
+1. Perform an initial scan over the environment, capturing 10 images from the hand-view camera. This is all fused into a single bird-eye view camera and height map. The initial scan is done using the `pd_joint_pos` actions in `qpos_scan_sequence.pkl`
 2. Train the Transporter Network on this scanned data, while also predicting a bin of 144 rotations instead of the default 36.
 3. During evaluation (e.g in the ManiSkill2 challenge), perform the same initial scan and then predict the pose of the target object and the pose of the goal object (the actions of the TransporterNetwork). A motion planning solution is then used to pick and place according to the predicted poses.
 
-## Getting Started
+The initial scan + motion planning solution looks as follows:
 
-### Installation
+![Example video visualizing the initial scan + motion planning solution](./assets/example.mp4)
+
+## Installation
 
 First create a new conda environment and install mani-skill2 and TransporterNetworks 
 ```
@@ -33,34 +35,27 @@ pip install tensorflow-addons==0.19.0
 pip install mani-skill2
 ```
 
-Then install pymp, a suite of motion planning tools.
+Then install pymp, a suite of motion planning tools used for the motion planning portion of this baseline.
 ```
 conda install pinocchio -c defaults -c conda-forge
 pip install --upgrade git+https://github.com/Jiayuan-Gu/pymp.git
 ```
 
-After installing everything, make sure to `cd` into this folder.
-
 ### Evaluation
 
-We have a pretrained model on google drive, download it here https://drive.google.com/file/d/1QoelH5swqgUUPOT7IQePcL14dWRHazrB/view?usp=sharing
-<!-- 
-To then test the model, run
-```
-python test_gripper.py \
-    --model="assembly144-transporter-1000-0" --n-steps=100000 --n-rotations=144 --json-name="train_episodes.json"
+You can download a pretrained model here https://drive.google.com/file/d/1NgSPeBE8jdDzK6Xj_B38q6PtYa9xjpQD/view?usp=share_link and unzip it to create a folder called `checkpoints`. Otherwise follow [the training section](#training) to learn how to reproduce the pretrained model.
 
-python test_gripper.py \
-    --model="assemblyscan-transporter-1000-0" --n-steps=100000 --n-rotations=144 --json-name="train_episodes.json"
-```
-
-You can also use `test_suction.py` to test with the suction gripper instead of a two-finger gripper. The pretrained models should get around 15-20% success rate of slotting in the piece into the assembly kit. -->
-
-To evaluate the model run
+To evaluate the model then run
 
 ```
-python -m mani_skill2.evaluation.run_evaluation -e "AssemblingKits-v0" -o out --cfg train_episodes.json
+python -m mani_skill2.evaluation.run_evaluation -e "AssemblingKits-v0" -o out --config-file train_episodes.json
 ```
+
+which uses the local user_solution.py file to solve the AssemblingKits environment, and reports results to a `out` folder. You can add `--record-dir=@` to also record videos to the same folder. The `user_solution.py` file will automatically use the model trained for `100000` steps saved in the above folder.
+
+The config-file train_episodes.json is an example evaluation configuration for local test purposes. The pretrained model after 100,000 training steps should get around a success rate of 14%.
+
+The original TransporterNetworks paper uses a more relaxed requirement for their AssemblingKits environment, to see the success rate of a model using the relaxed requirements see the `out/average_metrics.json` file and check the `pos_correct` and `rot_correct` keys, which is the proportion of evaluation episodes that succesfully positioned and rotated an object to the goal location under relaxed requirements.
 
 ### Training 
 
@@ -73,7 +68,7 @@ To generate the dataset, first download the demonstrations for AssemblingKits fr
 python -m mani_skill2.utils.download_demo AssemblingKits-v0 -o demos
 ```
 
-These demonstrations are simply used to generate the initial RGBD images of the assembly kit and the initial and goal poses.
+These demonstrations are simply used to generate the initial RGBD images of the assembly kit and the initial and goal poses (the actions of transporter networks)
 
 Once the demos are saved to a local `demos` folder, run the following to generate a training and test dataset
 
@@ -95,37 +90,9 @@ python gen_dataset.py --num-procs 8 \
 To run the training code, simply run the following
 
 ```
-python train.py --task=assemblyscan --agent=transporter --n_demos=1000 --n_rotations=144 
+python train.py --task=assembly --agent=transporter --n_demos=1000 --n_rotations=144 
 ```
 
-which will save models to `checkpoints/assembly144-transporter-1000-0`.
+which will save checkpoints to `checkpoints/assembly-transporter-1000-0`.
 
-
-
-
-
-
-
-
-
-
-
-
-```
-conda create --name ms2tpn python=3.8
-conda activate ms2tpnfix
-
-git clone https://github.com/google-research/ravens.git
-cd ravens
-pip install -r requirements.txt
-python setup.py install --user
-
-
-conda install -c conda-forge cudatoolkit=11.2.2 cudnn=8.1.0
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
-pip install --upgrade pip
-pip install tensorflow==2.11.*
-pip install tensorflow-addons==0.19.0
-
-pip install mani-skill2
-```
+To verify if your training is progressing normally, you can compare training logs on tensorboard with the one in this repo stored in `logs/transporter/assembly/baseline`. The training code here defaults to logging to `logs/transporter/assembly/<auto-generated-name>`, compare by running `tensorboard --logdir logs`.
