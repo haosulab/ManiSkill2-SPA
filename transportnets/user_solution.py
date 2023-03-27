@@ -228,14 +228,10 @@ class UserPolicy(BasePolicy):
 
                 translation = goal_pos - self.pred_obj_p
 
-                # obj_pose = sapien.Pose(self.pred_obj_p)
-                # obj_pose = tcp  # which is more accurate? Probably tcp
-                tcp_goal_pose = obj_goal_pose# * obj_pose.inv() * tcp
-                # import ipdb;ipdb.set_trace()
+                tcp_goal_pose = obj_goal_pose
                 tcp_goal_pose_p = tcp.p + translation
                 tcp_goal_pose_p = tcp_goal_pose.p
                 tcp_goal_pose_p[2] = 0.05
-                # tcp_goal_pose = sapien.Pose(tcp_goal_pose_p, goal_tcp_q)
                 tcp_goal_pose.set_p(tcp_goal_pose_p)
                 tcp_goal_pose.set_q(goal_tcp_q)
                 self.tcp_goal_pose = tcp_goal_pose
