@@ -12,6 +12,10 @@ There are two parts to install, Contact GraspNet, and ManiSkill2
 
 First install maniskill 2 in a new environment
 ```
+conda create --name ms2cgn python=3.8
+conda activate ms2tpn
+
+
 conda env create -n ms2cgn -f environment.yml
 conda activate ms2cgn
 python setup.py develop
@@ -26,8 +30,7 @@ conda env update -n ms2cgn --file contact_graspnet_env.yml
 
 You can also upgrade Tensorflow and recompile ops as follows if using a RTX 30xx
 ```
-conda install -c conda-forge cudatoolkit=11.2
-conda install -c conda-forge cudnn=8.2
+conda install -c conda-forge cudatoolkit=11.2 cudnn=8.2
 pip install tensorflow==2.5 tensorflow-gpu==2.5
 
 sh compile_pointnet_tfops.sh
