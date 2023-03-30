@@ -1,7 +1,0 @@
-results
-checkpoints/*
-*.npz
-**/*.pyc
-**/__pycache__
-.vscode
-test_data

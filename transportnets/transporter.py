@@ -138,25 +138,6 @@ class TransporterAgent:
         print(f"Train Iter: {step} Loss: {loss0:.4f} {loss1:.4f}")
         self.total_steps = step
 
-        # TODO(andyzeng) cleanup goal-conditioned model.
-
-        # if self.use_goal_image:
-        #   half = int(input_image.shape[2] / 2)
-        #   img_curr = input_image[:, :, :half]  # ignore goal portion
-        #   loss0 = self.attention.train(img_curr, p0, p0_theta)
-        # else:
-        #   loss0 = self.attention.train(input_image, p0, p0_theta)
-
-        # if isinstance(self.transport, Attention):
-        #   loss1 = self.transport.train(input_image, p1, p1_theta)
-        # elif isinstance(self.transport, TransportGoal):
-        #   half = int(input_image.shape[2] / 2)
-        #   img_curr = input_image[:, :, :half]
-        #   img_goal = input_image[:, :, half:]
-        #   loss1 = self.transport.train(img_curr, img_goal, p0, p1, p1_theta)
-        # else:
-        #   loss1 = self.transport.train(input_image, p0, p1, p1_theta)
-
     def validate(self, dataset, writer=None):  # pylint: disable=unused-argument
         """Test on a validation dataset for 10 iterations."""
         # print('Skipping validation.')
@@ -252,26 +233,6 @@ class TransporterAgent:
             "pose0": (np.asarray(p0_xyz), np.asarray(p0_xyzw)),
             "pose1": (np.asarray(p1_xyz), np.asarray(p1_xyzw)),
         }
-
-        # TODO(andyzeng) cleanup goal-conditioned model.
-
-        # Make a goal image if needed, and for consistency stack with input.
-        # if self.use_goal_image:
-        #   cmap_g, hmap_g = utils.get_fused_heightmap(goal, self.cam_config)
-        #   goal_image = self.concatenate_c_h(colormap_g, heightmap_g)
-        #   input_image = np.concatenate((input_image, goal_image), axis=2)
-        #   assert input_image.shape[2] == 12, input_image.shape
-
-        # if self.use_goal_image:
-        #   half = int(input_image.shape[2] / 2)
-        #   input_only = input_image[:, :, :half]  # ignore goal portion
-        #   pick_conf = self.attention.forward(input_only)
-        # else:
-        # if isinstance(self.transport, TransportGoal):
-        #   half = int(input_image.shape[2] / 2)
-        #   img_curr = input_image[:, :, :half]
-        #   img_goal = input_image[:, :, half:]
-        #   place_conf = self.transport.forward(img_curr, img_goal, p0_pix)
 
     def load(self, n_iter):
         """Load pre-trained models."""
